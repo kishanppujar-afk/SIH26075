@@ -1,0 +1,1879 @@
+export const mockEmployee = {
+  id: "EMP-2048",
+  name: "Aarav Sharma",
+  role: "Junior Full Stack Developer",
+  targetRole: "Senior Cloud Applications Engineer",
+  department: "Engineering & Digital Transformation",
+  avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+  readinessScore: 78,
+  skillIndex: 82,
+  completedCoursesCount: 14,
+  pendingAssessmentsCount: 2,
+  weeklyGoalHours: 6,
+  weeklyHoursLogged: 4.5,
+};
+
+export const mockSkills = [
+  {
+    id: "s1",
+    name: "React & Modern Frontend",
+    category: "Technical",
+    currentScore: 85,
+    targetScore: 90,
+    status: "Proficient",
+    trending: "up",
+  },
+  {
+    id: "s2",
+    name: "Cloud Architecture (AWS/GCP)",
+    category: "Cloud & DevOps",
+    currentScore: 62,
+    targetScore: 85,
+    status: "Growth Opportunity",
+    trending: "up",
+  },
+  {
+    id: "s3",
+    name: "Node.js & Microservices",
+    category: "Technical",
+    currentScore: 76,
+    targetScore: 80,
+    status: "On Track",
+    trending: "neutral",
+  },
+  {
+    id: "s4",
+    name: "Docker & Container Orchestration",
+    category: "Cloud & DevOps",
+    currentScore: 55,
+    targetScore: 80,
+    status: "Growth Opportunity",
+    trending: "up",
+  },
+  {
+    id: "s5",
+    name: "System Design & Scalability",
+    category: "Architecture",
+    currentScore: 68,
+    targetScore: 85,
+    status: "On Track",
+    trending: "up",
+  },
+  {
+    id: "s6",
+    name: "Cross-Functional Collaboration",
+    category: "Soft Skills",
+    currentScore: 92,
+    targetScore: 85,
+    status: "Exceeds Target",
+    trending: "neutral",
+  },
+];
+
+export const mockRecommendations = [
+  {
+    id: "rec1",
+    title: "Accelerate Docker & Kubernetes Deployment",
+    type: "Course",
+    provider: "SkillStat Academy",
+    duration: "4.5 hrs",
+    impactSkill: "Docker & Container Orchestration",
+    matchScore: 96,
+    isUrgent: true,
+  },
+  {
+    id: "rec2",
+    title: "Designing Resilient Cloud Architecture with AWS",
+    type: "Hands-on Lab",
+    provider: "CloudForge Labs",
+    duration: "6.0 hrs",
+    impactSkill: "Cloud Architecture (AWS/GCP)",
+    matchScore: 92,
+    isUrgent: true,
+  },
+  {
+    id: "rec3",
+    title: "Advanced Microservices Communication & Messaging",
+    type: "Workshop",
+    provider: "SkillStat Internal",
+    duration: "3.0 hrs",
+    impactSkill: "Node.js & Microservices",
+    matchScore: 84,
+    isUrgent: false,
+  },
+];
+
+export const mockAssessments = [
+  {
+    id: "asm1",
+    title: "Cloud Infrastructure & AWS Fundamentals",
+    category: "Cloud & DevOps",
+    dueDate: "2026-09-18",
+    estimatedMinutes: 15,
+    status: "Ready for Baseline Discovery",
+    questionCount: 6,
+    targetRole: "Senior Cloud Applications Engineer",
+    description: "Map your foundational baseline across compute scaling, container orchestration, IaC, and resilient architecture.",
+  },
+  {
+    id: "asm2",
+    title: "Modern React Patterns & Performance Audit",
+    category: "Technical",
+    completedDate: "2026-08-28",
+    baselineLevel: "Solid Foundation (88%)",
+    status: "Baseline Established",
+    questionCount: 6,
+    targetRole: "Senior Cloud Applications Engineer",
+    description: "Evaluated state management, memoization strategies, and render cycle optimizations.",
+  },
+  {
+    id: "asm3",
+    title: "Agile & Product Delivery Readiness",
+    category: "Process",
+    completedDate: "2026-08-10",
+    baselineLevel: "Exceeds Baseline (94%)",
+    status: "Baseline Established",
+    questionCount: 5,
+    targetRole: "Senior Cloud Applications Engineer",
+    description: "Mapped sprint cadence, async cross-functional communication, and PR velocity.",
+  },
+];
+
+export const mockAssessmentQuestions = [
+  {
+    id: "q1",
+    topic: "Compute & Scalability",
+    competency: "Cloud Architecture (AWS/GCP)",
+    scenario: "Your e-commerce application experiences predictable morning spikes and unexpected flash sale surges.",
+    question: "Which architectural pattern provides automated scaling without over-provisioning static compute servers?",
+    options: [
+      {
+        id: "q1-a",
+        text: "Configure an Auto Scaling Group with dynamic Target Tracking policies linked to average CPU utilization and request count",
+      },
+      {
+        id: "q1-b",
+        text: "Permanently deploy the maximum anticipated number of EC2 instances with oversized memory",
+      },
+      {
+        id: "q1-c",
+        text: "Execute a manual bash script at peak hours to restart virtual machines with larger CPU sizes",
+      },
+      {
+        id: "q1-d",
+        text: "Direct all excess traffic to a static cache server while keeping the compute layer fixed",
+      },
+    ],
+    uncertaintyOption: {
+      id: "q1-unsure",
+      text: "I'm not sure yet — haven't worked with auto-scaling policies yet",
+    },
+    correctOptionId: "q1-a",
+    rationale: "Target tracking scaling policies automatically adjust capacity in response to dynamic workload changes to maintain target performance.",
+    growthResource: {
+      title: "Designing Resilient Cloud Architecture with AWS",
+      type: "Hands-on Lab",
+      duration: "6.0 hrs",
+    },
+  },
+  {
+    id: "q2",
+    topic: "Container Orchestration",
+    competency: "Docker & Container Orchestration",
+    scenario: "Developers report that an application functions seamlessly on macOS laptops but encounters runtime library collisions on Linux production hosts.",
+    question: "How does containerization with Docker eliminate this environment discrepancy?",
+    options: [
+      {
+        id: "q2-a",
+        text: "By bundling application source code, runtime, system dependencies, and configurations into an immutable image sharing the host kernel",
+      },
+      {
+        id: "q2-b",
+        text: "By installing a complete guest operating system and hypervisor inside every running process",
+      },
+      {
+        id: "q2-c",
+        text: "By compiling JavaScript files directly into machine binary code prior to deployment",
+      },
+      {
+        id: "q2-d",
+        text: "By replacing the physical router configuration on the host server network card",
+      },
+    ],
+    uncertaintyOption: {
+      id: "q2-unsure",
+      text: "I'm not sure yet — still exploring container isolation principles",
+    },
+    correctOptionId: "q2-a",
+    rationale: "Docker packages code along with its exact binary dependencies into a standard image, guaranteeing uniform execution across all environments.",
+    growthResource: {
+      title: "Accelerate Docker & Kubernetes Deployment",
+      type: "Course",
+      duration: "4.5 hrs",
+    },
+  },
+  {
+    id: "q3",
+    topic: "Infrastructure as Code",
+    competency: "Cloud Architecture (AWS/GCP)",
+    scenario: "Your team wants repeatable cloud environments across development, staging, and production without manual AWS console drift.",
+    question: "What is the primary architectural value of declarative Infrastructure as Code (e.g. Terraform, AWS CloudFormation)?",
+    options: [
+      {
+        id: "q3-a",
+        text: "You specify the desired end-state of your cloud resources, and the engine calculates execution diffs and reconciles state automatically",
+      },
+      {
+        id: "q3-b",
+        text: "You write procedural scripts with sleep timers to ensure each server boots before the next command",
+      },
+      {
+        id: "q3-c",
+        text: "It bypasses cloud provider identity management by generating anonymous resources",
+      },
+      {
+        id: "q3-d",
+        text: "It compiles backend code into microservices without requiring any database connections",
+      },
+    ],
+    uncertaintyOption: {
+      id: "q3-unsure",
+      text: "I'm not sure yet — haven't authored declarative cloud infrastructure",
+    },
+    correctOptionId: "q3-a",
+    rationale: "Declarative IaC models let engineers define the target architecture, while the state engine figures out dependencies and resource lifecycle safely.",
+    growthResource: {
+      title: "Designing Resilient Cloud Architecture with AWS",
+      type: "Hands-on Lab",
+      duration: "6.0 hrs",
+    },
+  },
+  {
+    id: "q4",
+    topic: "Identity & Security Governance",
+    competency: "System Design & Scalability",
+    scenario: "A background job running on an EC2 instance needs continuous permission to upload telemetry logs to an S3 bucket.",
+    question: "Which approach adheres to the security principle of least privilege without hardcoded secrets?",
+    options: [
+      {
+        id: "q4-a",
+        text: "Attach an IAM Role with an instance profile granting scoped s3:PutObject permissions, using automated rotating temporary credentials",
+      },
+      {
+        id: "q4-b",
+        text: "Commit the root AWS Access Key and Secret Key into the project's git repository .env file",
+      },
+      {
+        id: "q4-c",
+        text: "Make the entire S3 bucket publicly readable and writable by anonymous internet users",
+      },
+      {
+        id: "q4-d",
+        text: "Store long-lived administrator API tokens in cleartext within an unencrypted database table",
+      },
+    ],
+    uncertaintyOption: {
+      id: "q4-unsure",
+      text: "I'm not sure yet — need more exposure to IAM instance roles and policies",
+    },
+    correctOptionId: "q4-a",
+    rationale: "IAM Roles on instance profiles provide rotating STS tokens automatically, removing the vulnerability of static secrets.",
+    growthResource: {
+      title: "Advanced Microservices Communication & Messaging",
+      type: "Workshop",
+      duration: "3.0 hrs",
+    },
+  },
+  {
+    id: "q5",
+    topic: "High Availability & Resilience",
+    competency: "System Design & Scalability",
+    scenario: "A business-critical API requires 99.99% availability even if a physical power outage impacts a regional data center facility.",
+    question: "Which design pattern delivers fault tolerance against single-facility data center disruption?",
+    options: [
+      {
+        id: "q5-a",
+        text: "Distribute stateless worker instances across at least two distinct Availability Zones behind an Application Load Balancer",
+      },
+      {
+        id: "q5-b",
+        text: "Increase the single server's hard drive storage capacity to prevent disk saturation",
+      },
+      {
+        id: "q5-c",
+        text: "Rely on weekly offline magnetic tape backups stored in an administrative locker",
+      },
+      {
+        id: "q5-d",
+        text: "Deploy multiple virtual machines onto the exact same physical server blade",
+      },
+    ],
+    uncertaintyOption: {
+      id: "q5-unsure",
+      text: "I'm not sure yet — haven't architected Multi-AZ resilience patterns",
+    },
+    correctOptionId: "q5-a",
+    rationale: "Availability Zones are physically separated facilities with redundant power and networking; distributing workloads across them prevents single-point failure.",
+    growthResource: {
+      title: "Designing Resilient Cloud Architecture with AWS",
+      type: "Hands-on Lab",
+      duration: "6.0 hrs",
+    },
+  },
+  {
+    id: "q6",
+    topic: "Data Lifecycle & Storage Optimization",
+    competency: "Cloud Architecture (AWS/GCP)",
+    scenario: "Audit regulations mandate retaining customer financial statements for 7 years. Documents are accessed frequently for 30 days, but rarely accessed thereafter.",
+    question: "Which cloud storage strategy balances fast initial retrieval with optimal long-term storage cost?",
+    options: [
+      {
+        id: "q6-a",
+        text: "Use S3 Standard for the first 30 days, then apply an automated Lifecycle rule to transition objects to S3 Glacier Flexible Deep Archive",
+      },
+      {
+        id: "q6-b",
+        text: "Delete all statements after 30 days and attempt to regenerate them from memory when requested",
+      },
+      {
+        id: "q6-c",
+        text: "Leave all files permanently in S3 Standard to simplify configuration regardless of storage expense",
+      },
+      {
+        id: "q6-d",
+        text: "Compress files and email them as attachments to the engineering team's shared inbox",
+      },
+    ],
+    uncertaintyOption: {
+      id: "q6-unsure",
+      text: "I'm not sure yet — haven't configured storage lifecycle policies",
+    },
+    correctOptionId: "q6-a",
+    rationale: "S3 Lifecycle policies automate tiered transitions from high-frequency hot storage to ultra low-cost cold archive storage seamlessly.",
+    growthResource: {
+      title: "Designing Resilient Cloud Architecture with AWS",
+      type: "Hands-on Lab",
+      duration: "6.0 hrs",
+    },
+  },
+];
+
+export const mockAiInsights = [
+  {
+    id: "ins1",
+    type: "Opportunity",
+    text: "You are only 13 points away from matching the benchmark for Senior Cloud Applications Engineer. Completing Docker & Container Orchestration will bridge 60% of this gap.",
+  },
+  {
+    id: "ins2",
+    type: "Streak",
+    text: "Consistent learner! You have logged 4 consecutive weeks of continuous skill development.",
+  },
+];
+
+
+// Verified catalogue of official training programmes and learning resources
+// strictly sourced ONLY from NSSTA (https://nssta.gov.in/) and MoSPI (https://mospi.gov.in/)
+export const mockOfficialTrainingResources = [
+  {
+    "title": "DSTP: Unit Level Data Extraction, Data Analysis Using R, Data Visualisation & AI Use Cases in Official Statistics",
+    "description": "Domain Specific Training Programme covering unit-level data extraction from national surveys, data analysis using R programming, data dissemination and visualisation techniques, and AI use cases in official statistics.",
+    "source": "NSSTA",
+    "url": "https://nssta.gov.in/api/trainingcalendar/download/58",
+    "keywords": [
+      "R programming",
+      "data analysis",
+      "visualization",
+      "AI",
+      "official statistics",
+      "unit data",
+      "DSTP",
+      "domain specific training",
+      "data extraction"
+    ],
+    "topics": [
+      "R",
+      "Data Analysis",
+      "Data Visualization",
+      "AI",
+      "Official Statistics"
+    ],
+    "relatedSkills": [
+      "R",
+      "data analysis",
+      "data visualization",
+      "AI",
+      "official statistics",
+      "statistics"
+    ]
+  },
+  {
+    "title": "MCTP Phase I: Foundation Course on Artificial Intelligence and Big Data (IIT Kharagpur)",
+    "description": "Mandatory Mid-Career Training Programme Phase I on Artificial Intelligence and Big Data conducted at IIT Kharagpur for in-service ISS officers of 8–10 years of service.",
+    "source": "NSSTA",
+    "url": "https://nssta.gov.in/api/trainingcalendar/download/51",
+    "keywords": [
+      "artificial intelligence",
+      "big data",
+      "machine learning",
+      "IIT Kharagpur",
+      "MCTP",
+      "mid-career training",
+      "Python",
+      "AI"
+    ],
+    "topics": [
+      "AI",
+      "Big Data",
+      "Machine Learning",
+      "Python"
+    ],
+    "relatedSkills": [
+      "AI",
+      "machine learning",
+      "big data",
+      "Python",
+      "data analysis"
+    ]
+  },
+  {
+    "title": "Advance Training Calendar of NSSTA for FY 2026-27",
+    "description": "Comprehensive annual training calendar listing all scheduled NSSTA programmes including ISS probationary training, MCTP, DSTP, State/UT training, and specialised workshops for FY 2026-27.",
+    "source": "NSSTA",
+    "url": "https://nssta.gov.in/api/trainingcalendar/download/57",
+    "keywords": [
+      "training calendar",
+      "NSSTA",
+      "training programme",
+      "ISS",
+      "capacity building",
+      "schedule",
+      "annual calendar"
+    ],
+    "topics": [
+      "Official Statistics",
+      "Training Calendar",
+      "Statistical Training"
+    ],
+    "relatedSkills": [
+      "official statistics",
+      "statistics",
+      "data analysis",
+      "survey",
+      "sampling"
+    ]
+  },
+  {
+    "title": "ISS Mid-Career Training Programme (MCTP) & Domain Specific Training Programmes (DSTP)",
+    "description": "Advanced capacity-building modules for in-service Indian Statistical Service officers covering AI, big data, machine learning, survey methodology, applied statistics, and emerging analytical frameworks.",
+    "source": "NSSTA",
+    "url": "https://nssta.gov.in/api/documents/download/40",
+    "keywords": [
+      "MCTP",
+      "mid-career training",
+      "ISS",
+      "domain specific",
+      "DSTP",
+      "refresher",
+      "AI",
+      "machine learning",
+      "statistics"
+    ],
+    "topics": [
+      "AI",
+      "Machine Learning",
+      "Big Data",
+      "Survey Methodology",
+      "Applied Statistics"
+    ],
+    "relatedSkills": [
+      "AI",
+      "machine learning",
+      "statistics",
+      "survey",
+      "data analysis"
+    ]
+  },
+  {
+    "title": "NSSTA Training Offerings: ISS Probationary, State/UT & Central Government Programmes",
+    "description": "All NSSTA training offerings including ISS probationary training conducted with ISI, IIMs and IASRI, State/UT statistical service training, and Central Government statistical personnel capacity building.",
+    "source": "NSSTA",
+    "url": "https://nssta.gov.in/api/documents/download/51",
+    "keywords": [
+      "ISS probationary",
+      "state training",
+      "central government",
+      "statistical training",
+      "R programming",
+      "official statistics",
+      "offerings"
+    ],
+    "topics": [
+      "Official Statistics",
+      "Statistical Systems",
+      "Survey Methodologies",
+      "R",
+      "Statistical Computing"
+    ],
+    "relatedSkills": [
+      "official statistics",
+      "statistics",
+      "R",
+      "survey",
+      "sampling",
+      "data analysis"
+    ]
+  },
+  {
+    "title": "In-Service Training (IST) Programmes: DoPT Sponsored via NSSTA for FY 2026-27",
+    "description": "One-week In-Service Training Programmes offered by DoPT during FY 2026-27 with NSSTA sponsorship for eligible ISS officers, covering specialised statistical and administrative competencies.",
+    "source": "NSSTA",
+    "url": "https://nssta.gov.in/api/trainingcalendar/download/59",
+    "keywords": [
+      "IST",
+      "in-service training",
+      "DoPT",
+      "ISS officers",
+      "capacity building",
+      "statistical competencies"
+    ],
+    "topics": [
+      "In-Service Training",
+      "Capacity Building",
+      "Statistical Competencies"
+    ],
+    "relatedSkills": [
+      "official statistics",
+      "statistics",
+      "data analysis"
+    ]
+  },
+  {
+    "title": "Sarvekshana Journal — Issue 120 (April 2026)",
+    "description": "Latest issue of Sarvekshana, NSSTA flagship statistical research journal featuring peer-reviewed articles on survey methodology, sampling design, statistical analysis, and official statistics.",
+    "source": "NSSTA",
+    "url": "https://nssta.gov.in/api/documents/download/72",
+    "keywords": [
+      "Sarvekshana",
+      "journal",
+      "survey methodology",
+      "sampling",
+      "statistical research",
+      "NSS",
+      "peer reviewed"
+    ],
+    "topics": [
+      "Survey Methodology",
+      "Sampling",
+      "Statistical Research",
+      "Official Statistics"
+    ],
+    "relatedSkills": [
+      "survey",
+      "sampling",
+      "statistics",
+      "official statistics",
+      "data analysis"
+    ]
+  },
+  {
+    "title": "Sarvekshana Journal — 118th & 119th Combined Issue",
+    "description": "Combined issue of the Sarvekshana journal covering statistical research articles, survey design insights, and applied methodological studies from national sample surveys.",
+    "source": "NSSTA",
+    "url": "https://nssta.gov.in/api/documents/download/70",
+    "keywords": [
+      "Sarvekshana",
+      "journal",
+      "survey",
+      "sampling",
+      "statistical research",
+      "methodology"
+    ],
+    "topics": [
+      "Survey Methodology",
+      "Sampling",
+      "Statistical Research"
+    ],
+    "relatedSkills": [
+      "survey",
+      "sampling",
+      "statistics",
+      "data analysis"
+    ]
+  },
+  {
+    "title": "Sarvekshana Supplement: Commemorating 75 Years of National Sample Survey",
+    "description": "Special supplement commemorating 75 years of NSS, documenting the history, evolution, and methodological milestones of India national statistical survey infrastructure.",
+    "source": "NSSTA",
+    "url": "https://nssta.gov.in/api/documents/download/69",
+    "keywords": [
+      "75 years NSS",
+      "national sample survey",
+      "survey history",
+      "sampling",
+      "official statistics",
+      "NSS"
+    ],
+    "topics": [
+      "National Sample Survey",
+      "Survey History",
+      "Official Statistics",
+      "Sampling"
+    ],
+    "relatedSkills": [
+      "survey",
+      "sampling",
+      "official statistics",
+      "statistics"
+    ]
+  },
+  {
+    "title": "Sarvekshana Journal — 117th Issue (September 2024)",
+    "description": "Issue 117 of the Sarvekshana journal with articles on statistical methodology, survey design, data analysis approaches, and applied statistics research.",
+    "source": "NSSTA",
+    "url": "https://nssta.gov.in/api/documents/download/62",
+    "keywords": [
+      "Sarvekshana",
+      "journal",
+      "statistical methodology",
+      "survey design",
+      "data analysis"
+    ],
+    "topics": [
+      "Statistical Methodology",
+      "Survey Design",
+      "Data Analysis"
+    ],
+    "relatedSkills": [
+      "statistics",
+      "survey",
+      "sampling",
+      "data analysis"
+    ]
+  },
+  {
+    "title": "Know Your Ministry: Orientation Module on MoSPI",
+    "description": "Comprehensive orientation module about the Ministry of Statistics and Programme Implementation covering its organisational structure, statistical divisions, key products, surveys, and data dissemination framework.",
+    "source": "NSSTA",
+    "url": "https://nssta.gov.in/api/documents/download/50",
+    "keywords": [
+      "know your ministry",
+      "MoSPI",
+      "official statistics",
+      "statistical system",
+      "orientation",
+      "organisation"
+    ],
+    "topics": [
+      "Official Statistics",
+      "MoSPI",
+      "Statistical Systems"
+    ],
+    "relatedSkills": [
+      "official statistics",
+      "statistics",
+      "data analysis"
+    ]
+  },
+  {
+    "title": "STA Survey Report: Statistical Training Assessment",
+    "description": "NSSTA Statistical Training Assessment survey report documenting training needs analysis, skill gap assessments, and capacity building requirements across the Indian Statistical Service.",
+    "source": "NSSTA",
+    "url": "https://nssta.gov.in/api/documents/download/45",
+    "keywords": [
+      "STA",
+      "survey report",
+      "training assessment",
+      "skill gap",
+      "capacity building",
+      "training needs"
+    ],
+    "topics": [
+      "Training Assessment",
+      "Skill Gap Analysis",
+      "Capacity Building"
+    ],
+    "relatedSkills": [
+      "statistics",
+      "official statistics",
+      "data analysis",
+      "survey"
+    ]
+  },
+  {
+    "title": "NSSTA Annual Report 2024-25",
+    "description": "Annual report documenting NSSTA training activities, programme outcomes, institutional achievements, and capacity building initiatives for statistical personnel across India during FY 2024-25.",
+    "source": "NSSTA",
+    "url": "https://nssta.gov.in/api/trainingcalendar/download/53",
+    "keywords": [
+      "annual report",
+      "NSSTA",
+      "training activities",
+      "capacity building",
+      "achievements"
+    ],
+    "topics": [
+      "Annual Report",
+      "Training Activities",
+      "Capacity Building"
+    ],
+    "relatedSkills": [
+      "official statistics",
+      "statistics"
+    ]
+  },
+  {
+    "title": "NSSTA News, Circulars & Training Announcements",
+    "description": "Latest announcements, circulars, and course schedules for NSSTA workshops on data analytics, visualisation, modern statistical methodologies, and upcoming training programmes.",
+    "source": "NSSTA",
+    "url": "https://nssta.gov.in/news-and-announcements",
+    "keywords": [
+      "news",
+      "announcements",
+      "circulars",
+      "workshops",
+      "data analytics",
+      "visualisation",
+      "training schedule"
+    ],
+    "topics": [
+      "Data Analytics",
+      "Data Visualization",
+      "Workshops",
+      "Training Announcements"
+    ],
+    "relatedSkills": [
+      "data visualization",
+      "data analysis",
+      "statistics"
+    ]
+  },
+  {
+    "title": "TPAC Meeting Minutes FY 2026-27 (Training Programme Advisory Committee)",
+    "description": "Minutes of the Training Programme Advisory Committee meeting for FY 2026-27, covering training programme planning, curriculum decisions, and strategic direction for NSSTA statistical training initiatives.",
+    "source": "NSSTA",
+    "url": "https://nssta.gov.in/api/documents/download/71",
+    "keywords": [
+      "TPAC",
+      "advisory committee",
+      "training programme",
+      "curriculum",
+      "planning",
+      "minutes"
+    ],
+    "topics": [
+      "Training Planning",
+      "Curriculum",
+      "Official Statistics"
+    ],
+    "relatedSkills": [
+      "official statistics",
+      "statistics"
+    ]
+  },
+  {
+    "title": "eSankhyiki Python Library: Programmatic Access to MoSPI Statistical Datasets",
+    "description": "Official Python package (pip install mospi-esankhyiki) for programmatic discovery, querying, and extraction of national statistical datasets from MoSPI. Provides list_datasets(), get_data(), and filtering functions.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/esankhyiki-python-library",
+    "keywords": [
+      "Python",
+      "esankhyiki",
+      "pip install",
+      "data extraction",
+      "API",
+      "statistical datasets",
+      "programming",
+      "mospi-esankhyiki"
+    ],
+    "topics": [
+      "Python",
+      "Data Analysis",
+      "API",
+      "Statistical Computing",
+      "eSankhyiki"
+    ],
+    "relatedSkills": [
+      "Python",
+      "data analysis",
+      "statistics",
+      "data management"
+    ]
+  },
+  {
+    "title": "Unit Data Python Library: Microdata Analysis from National Surveys",
+    "description": "Official Python package (pip install mospi-unitdata) for accessing and analysing unit-level microdata from national sample surveys via the Microdata Portal (microdata.gov.in).",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/unitdata-python-library",
+    "keywords": [
+      "Python",
+      "unitdata",
+      "microdata",
+      "unit level data",
+      "survey data",
+      "pip install",
+      "microdata portal",
+      "mospi-unitdata"
+    ],
+    "topics": [
+      "Python",
+      "Unit Data",
+      "Survey Microdata",
+      "Sampling",
+      "Data Processing"
+    ],
+    "relatedSkills": [
+      "Python",
+      "sampling",
+      "survey",
+      "data analysis",
+      "statistics"
+    ]
+  },
+  {
+    "title": "NIC 2008 Code Finder: National Industrial Classification",
+    "description": "Interactive tool for looking up NIC 2008 codes used for classifying economic activities in surveys, censuses, and official statistical collections across India.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/nic-2008-codefinder",
+    "keywords": [
+      "NIC",
+      "national industrial classification",
+      "code finder",
+      "economic activities",
+      "classification",
+      "NIC 2008"
+    ],
+    "topics": [
+      "Classification",
+      "NIC",
+      "Industrial Classification",
+      "Statistical Standards"
+    ],
+    "relatedSkills": [
+      "official statistics",
+      "data management",
+      "statistics"
+    ]
+  },
+  {
+    "title": "NIC 2025 Code Finder: Updated National Industrial Classification",
+    "description": "Updated interactive code finder for the NIC 2025 classification system — the latest revision of India National Industrial Classification for categorising economic and industrial activities.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/nic-2025-codefinder",
+    "keywords": [
+      "NIC",
+      "NIC 2025",
+      "national industrial classification",
+      "code finder",
+      "classification",
+      "updated"
+    ],
+    "topics": [
+      "Classification",
+      "NIC 2025",
+      "Industrial Classification",
+      "Statistical Standards"
+    ],
+    "relatedSkills": [
+      "official statistics",
+      "data management",
+      "statistics"
+    ]
+  },
+  {
+    "title": "MoSPI Data Visualisations & Interactive Statistical Dashboards",
+    "description": "Interactive visual analytics dashboards presenting GDP estimates, GVA by economic sector, CPI trends, per capita income, capital formation, and quarterly economic data with filtering by source and time period.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/all-visualization",
+    "keywords": [
+      "visualization",
+      "dashboard",
+      "GDP",
+      "GVA",
+      "CPI",
+      "macroeconomic",
+      "interactive",
+      "charts",
+      "graphs"
+    ],
+    "topics": [
+      "Data Visualization",
+      "GDP",
+      "GVA",
+      "CPI",
+      "Macroeconomic Indicators"
+    ],
+    "relatedSkills": [
+      "data visualization",
+      "data analysis",
+      "statistics",
+      "econometrics"
+    ]
+  },
+  {
+    "title": "Statistical Data and Metadata Exchange (SDMX) Standards",
+    "description": "International SDMX standards and architecture for exchanging official statistical data and metadata between agencies, supporting modern data governance and automated data workflows.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/statistical-data-and-metadata-exchange",
+    "keywords": [
+      "SDMX",
+      "metadata",
+      "data exchange",
+      "data governance",
+      "data standards",
+      "statistical data",
+      "interoperability",
+      "SQL"
+    ],
+    "topics": [
+      "SDMX",
+      "Metadata Management",
+      "Data Governance",
+      "Data Standards"
+    ],
+    "relatedSkills": [
+      "official statistics",
+      "data management",
+      "data analysis",
+      "statistics"
+    ]
+  },
+  {
+    "title": "Data Governance Guidelines: A Practitioner Handbook on Data Harmonisation",
+    "description": "Comprehensive practitioner handbook on data harmonisation covering data governance frameworks, data quality standards, interoperability principles, and best practices for harmonising statistical data across agencies.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/data-governance-guidelines",
+    "keywords": [
+      "data governance",
+      "data harmonisation",
+      "data quality",
+      "handbook",
+      "data standards",
+      "interoperability",
+      "practitioner",
+      "data management"
+    ],
+    "topics": [
+      "Data Governance",
+      "Data Harmonisation",
+      "Data Quality",
+      "Data Standards"
+    ],
+    "relatedSkills": [
+      "data management",
+      "official statistics",
+      "data analysis",
+      "statistics"
+    ]
+  },
+  {
+    "title": "MoSPI Data Governance Framework",
+    "description": "MoSPI data governance framework covering data quality assurance, data lifecycle management, privacy and confidentiality standards, and institutional mechanisms for governing official statistical data.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/data-governance",
+    "keywords": [
+      "data governance",
+      "data quality",
+      "data privacy",
+      "data management",
+      "statistical standards",
+      "data lifecycle"
+    ],
+    "topics": [
+      "Data Governance",
+      "Data Quality",
+      "Data Privacy",
+      "Statistical Standards"
+    ],
+    "relatedSkills": [
+      "data management",
+      "official statistics",
+      "statistics"
+    ]
+  },
+  {
+    "title": "MoSPI Statistical Release Calendar",
+    "description": "Advance release calendar of MoSPI planned statistical publications, data releases, survey reports, and official statistics dissemination schedule following SDDS transparency standards.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/release-calendar",
+    "keywords": [
+      "release calendar",
+      "data release",
+      "SDDS",
+      "dissemination",
+      "statistical publications",
+      "schedule"
+    ],
+    "topics": [
+      "Release Calendar",
+      "SDDS",
+      "Official Statistics",
+      "Data Dissemination"
+    ],
+    "relatedSkills": [
+      "official statistics",
+      "data management",
+      "statistics"
+    ]
+  },
+  {
+    "title": "National Sample Survey Office (NSSO): Survey Operations & Methodology",
+    "description": "Official portal of the National Sample Survey Office covering ongoing surveys, survey design frameworks, sampling stratification techniques, field operations, and NSS methodology documentation.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/national-sample-survey-office",
+    "keywords": [
+      "NSS",
+      "NSSO",
+      "national sample survey",
+      "survey design",
+      "sampling",
+      "field operations",
+      "stratification"
+    ],
+    "topics": [
+      "Survey Design",
+      "Sampling Techniques",
+      "Field Operations",
+      "NSS"
+    ],
+    "relatedSkills": [
+      "survey",
+      "sampling",
+      "official statistics",
+      "statistics"
+    ]
+  },
+  {
+    "title": "Annual Survey of Services Sector Enterprises (ASI-SSE) 2026",
+    "description": "Official portal for the ASI-SSE 2026 survey providing methodology documentation, survey instruments, user guides, and data resources for analysing India services sector enterprises.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/annual-survey-of-services-sector-enterprises-2026",
+    "keywords": [
+      "ASI-SSE",
+      "ASISSE",
+      "services sector",
+      "annual survey",
+      "enterprise survey",
+      "survey methodology"
+    ],
+    "topics": [
+      "Survey Methodology",
+      "Services Sector",
+      "Enterprise Statistics"
+    ],
+    "relatedSkills": [
+      "survey",
+      "sampling",
+      "statistics",
+      "data analysis"
+    ]
+  },
+  {
+    "title": "National Household Income Survey (NHIS) 2026",
+    "description": "Portal for the landmark National Household Income Survey 2026 measuring household income distribution across India, with methodology documentation and survey instruments.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/national-household-income-survey-2026",
+    "keywords": [
+      "NHIS",
+      "household income",
+      "income survey",
+      "national survey",
+      "income distribution",
+      "household survey"
+    ],
+    "topics": [
+      "Household Survey",
+      "Income Statistics",
+      "Survey Methodology",
+      "Sampling"
+    ],
+    "relatedSkills": [
+      "survey",
+      "sampling",
+      "statistics",
+      "data analysis",
+      "demography"
+    ]
+  },
+  {
+    "title": "Domestic Travel Expenditure Survey (DTES) & National Household Travel Survey (NHTS)",
+    "description": "Portal for the DTES and NHTS providing survey documentation, methodology, and resources for analysing domestic travel patterns and household expenditure on travel.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/domestic-travel-expenditure-survey-and-national-household-travel-survey",
+    "keywords": [
+      "DTES",
+      "NHTS",
+      "travel survey",
+      "expenditure survey",
+      "domestic travel",
+      "household survey"
+    ],
+    "topics": [
+      "Survey Methodology",
+      "Travel Statistics",
+      "Expenditure Survey"
+    ],
+    "relatedSkills": [
+      "survey",
+      "sampling",
+      "statistics",
+      "data analysis"
+    ]
+  },
+  {
+    "title": "MoSPI Publications & Reports Library",
+    "description": "Central repository of all MoSPI publications including National Accounts Statistics, PLFS bulletins, SDG reports, Women and Men in India, EnviStats, Economic Census, and other statistical reports.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/publications-reports",
+    "keywords": [
+      "publications",
+      "reports",
+      "NAS",
+      "PLFS",
+      "SDG",
+      "economic census",
+      "statistics",
+      "library"
+    ],
+    "topics": [
+      "National Accounts",
+      "PLFS",
+      "SDG",
+      "Economic Census",
+      "Statistical Reports"
+    ],
+    "relatedSkills": [
+      "official statistics",
+      "statistics",
+      "data analysis",
+      "econometrics"
+    ]
+  },
+  {
+    "title": "National Accounts Statistics (NAS) 2026",
+    "description": "The definitive compilation of India national accounts including GDP, GVA by economic activity, input-output tables, state domestic product, consumption expenditure, savings, and capital formation estimates.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/publications-reports/innerpage/2861",
+    "keywords": [
+      "national accounts",
+      "NAS",
+      "GDP",
+      "GVA",
+      "domestic product",
+      "consumption",
+      "capital formation",
+      "savings"
+    ],
+    "topics": [
+      "National Accounts",
+      "GDP",
+      "GVA",
+      "Economic Statistics",
+      "Price Indices"
+    ],
+    "relatedSkills": [
+      "econometrics",
+      "official statistics",
+      "statistics",
+      "data analysis"
+    ]
+  },
+  {
+    "title": "Periodic Labour Force Survey (PLFS) — Monthly Bulletin (July 2026)",
+    "description": "Latest PLFS monthly bulletin providing estimates of labour force participation rate, worker population ratio, unemployment rate, and labour market indicators for urban India.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/publications-reports/innerpage/2856",
+    "keywords": [
+      "PLFS",
+      "periodic labour force survey",
+      "unemployment",
+      "labour force",
+      "monthly bulletin",
+      "employment"
+    ],
+    "topics": [
+      "Labour Statistics",
+      "PLFS",
+      "Unemployment",
+      "Survey Methodology",
+      "Demography"
+    ],
+    "relatedSkills": [
+      "survey",
+      "sampling",
+      "statistics",
+      "data analysis",
+      "demography"
+    ]
+  },
+  {
+    "title": "Periodic Labour Force Survey (PLFS) — Quarterly Bulletin (Apr–Jun 2026)",
+    "description": "Quarterly bulletin with detailed estimates on employment, unemployment, labour force participation, and worker population ratio from PLFS for both urban and rural India.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/publications-reports/innerpage/2855",
+    "keywords": [
+      "PLFS",
+      "quarterly",
+      "employment",
+      "unemployment",
+      "labour statistics",
+      "labour force participation"
+    ],
+    "topics": [
+      "Labour Statistics",
+      "PLFS",
+      "Employment",
+      "Quarterly Estimates"
+    ],
+    "relatedSkills": [
+      "survey",
+      "sampling",
+      "statistics",
+      "demography"
+    ]
+  },
+  {
+    "title": "Women and Men in India 2025: Selected Indicators & Data",
+    "description": "Gender-disaggregated statistical compilation across health, education, employment, political participation, and social indicators for analysing gender dimensions in India development.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/publications-reports/innerpage/2823",
+    "keywords": [
+      "women and men",
+      "gender",
+      "social statistics",
+      "demography",
+      "development indicators",
+      "gender disaggregated"
+    ],
+    "topics": [
+      "Social Statistics",
+      "Gender Statistics",
+      "Demography",
+      "Development Indicators"
+    ],
+    "relatedSkills": [
+      "statistics",
+      "data analysis",
+      "demography",
+      "official statistics"
+    ]
+  },
+  {
+    "title": "SDG National Indicator Framework (NIF) Progress Report 2026",
+    "description": "India progress report on Sustainable Development Goals using the National Indicator Framework, with statistical indicators for all 17 SDGs, trend analysis, and data visualisations.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/publications-reports/innerpage/2837",
+    "keywords": [
+      "SDG",
+      "sustainable development goals",
+      "NIF",
+      "national indicator framework",
+      "progress report",
+      "indicators"
+    ],
+    "topics": [
+      "SDG",
+      "Sustainable Development",
+      "National Indicators",
+      "Social Statistics"
+    ],
+    "relatedSkills": [
+      "official statistics",
+      "statistics",
+      "data analysis",
+      "data visualization"
+    ]
+  },
+  {
+    "title": "Sustainable Development Goals (SDG) Dashboard & Indicators",
+    "description": "MoSPI SDG portal with India-specific statistical indicators, progress tracking, data visualisations, and metadata for all 17 Sustainable Development Goals aligned with the NIF.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/sdg",
+    "keywords": [
+      "SDG",
+      "sustainable development goals",
+      "indicators",
+      "dashboard",
+      "progress tracking",
+      "NIF"
+    ],
+    "topics": [
+      "SDG",
+      "Sustainable Development",
+      "Development Indicators",
+      "Data Visualization"
+    ],
+    "relatedSkills": [
+      "official statistics",
+      "statistics",
+      "data visualization",
+      "data analysis"
+    ]
+  },
+  {
+    "title": "Annual Survey of Unincorporated Sector Enterprises (ASUSE) 2025",
+    "description": "Report on enterprise characteristics, employment, gross value added, and economic contribution of India unincorporated (informal) sector from the ASUSE 2025.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/publications-reports/innerpage/2824",
+    "keywords": [
+      "ASUSE",
+      "unincorporated enterprises",
+      "informal sector",
+      "survey",
+      "enterprise statistics",
+      "GVA"
+    ],
+    "topics": [
+      "Survey Methodology",
+      "Enterprise Statistics",
+      "Economic Statistics",
+      "Sampling"
+    ],
+    "relatedSkills": [
+      "survey",
+      "sampling",
+      "statistics",
+      "data analysis",
+      "econometrics"
+    ]
+  },
+  {
+    "title": "MoSPI Working Papers: Statistical Research & Labour Market Analysis",
+    "description": "Peer-reviewed working papers including analyses of India labour market trends and workforce skill gap assessment using PLFS data, with applied econometric methods.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/working-papers",
+    "keywords": [
+      "working papers",
+      "research",
+      "labour market",
+      "skill gap",
+      "econometrics",
+      "PLFS",
+      "statistical research"
+    ],
+    "topics": [
+      "Econometrics",
+      "Labour Statistics",
+      "Skill Gap Analysis",
+      "Statistical Research"
+    ],
+    "relatedSkills": [
+      "econometrics",
+      "statistics",
+      "data analysis",
+      "sampling",
+      "R"
+    ]
+  },
+  {
+    "title": "MoSPI Statistical Themes: Products & Data Resources",
+    "description": "Thematic organisation of MoSPI statistical products including GDP, CPI, industrial production indices, economic census, environmental statistics, and other key statistical series.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/themes",
+    "keywords": [
+      "themes",
+      "statistical products",
+      "GDP",
+      "CPI",
+      "IIP",
+      "economic census",
+      "data resources"
+    ],
+    "topics": [
+      "GDP",
+      "CPI",
+      "Industrial Production",
+      "Economic Statistics"
+    ],
+    "relatedSkills": [
+      "statistics",
+      "data analysis",
+      "econometrics",
+      "official statistics"
+    ]
+  },
+  {
+    "title": "Consumer Price Index (CPI): Data, Methodology & Analysis",
+    "description": "Detailed CPI data, methodology documentation, and interactive visualisations for CPI (Combined, Rural, Urban) tracking inflation and price statistics across commodity groups.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/themes/product/9-consumer-price-index-cpi",
+    "keywords": [
+      "CPI",
+      "consumer price index",
+      "inflation",
+      "price statistics",
+      "index numbers",
+      "price index",
+      "commodity"
+    ],
+    "topics": [
+      "Price Statistics",
+      "CPI",
+      "Inflation",
+      "Index Numbers"
+    ],
+    "relatedSkills": [
+      "statistics",
+      "econometrics",
+      "data analysis",
+      "official statistics"
+    ]
+  },
+  {
+    "title": "District Domestic Product (DDP) Estimates",
+    "description": "District-level gross domestic product estimates and related economic indicators supporting sub-national economic analysis and regional development planning.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/district-domestic-product",
+    "keywords": [
+      "district domestic product",
+      "DDP",
+      "GDP",
+      "regional statistics",
+      "sub-national",
+      "economic statistics",
+      "district"
+    ],
+    "topics": [
+      "National Accounts",
+      "District GDP",
+      "Regional Statistics",
+      "Economic Statistics"
+    ],
+    "relatedSkills": [
+      "econometrics",
+      "statistics",
+      "data analysis",
+      "official statistics"
+    ]
+  },
+  {
+    "title": "Supply Use Tables (SUT)",
+    "description": "Supply and Use Tables providing a comprehensive framework linking production, intermediate consumption, and final uses of goods and services in the Indian economy.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/publications-reports/innerpage/847",
+    "keywords": [
+      "supply use tables",
+      "SUT",
+      "input-output",
+      "national accounts",
+      "production",
+      "consumption"
+    ],
+    "topics": [
+      "National Accounts",
+      "Supply Use Tables",
+      "Input-Output",
+      "Economic Statistics"
+    ],
+    "relatedSkills": [
+      "econometrics",
+      "statistics",
+      "official statistics",
+      "data analysis"
+    ]
+  },
+  {
+    "title": "All India Report of the Sixth Economic Census",
+    "description": "Comprehensive all-India report of the Sixth Economic Census covering establishment-level data on employment, enterprise characteristics, economic activities, and structure of India economic units.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/publications-reports/innerpage/2836",
+    "keywords": [
+      "economic census",
+      "sixth economic census",
+      "establishment",
+      "enterprise",
+      "employment",
+      "economic activities"
+    ],
+    "topics": [
+      "Economic Census",
+      "Enterprise Statistics",
+      "Employment",
+      "Economic Statistics"
+    ],
+    "relatedSkills": [
+      "statistics",
+      "survey",
+      "data analysis",
+      "official statistics"
+    ]
+  },
+  {
+    "title": "Report on Base Year Revision of All-India Index of Industrial Production (IIP)",
+    "description": "Technical Advisory Committee report on revising the base year of India IIP from 2011-12 to 2022-23, covering methodology updates, weighting diagrams, and industrial classification changes.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/publications-reports/innerpage/2832",
+    "keywords": [
+      "IIP",
+      "index of industrial production",
+      "base year",
+      "industrial production",
+      "index numbers",
+      "TAC",
+      "revision"
+    ],
+    "topics": [
+      "Index Numbers",
+      "Industrial Production",
+      "IIP",
+      "Base Year Revision"
+    ],
+    "relatedSkills": [
+      "econometrics",
+      "statistics",
+      "data analysis",
+      "official statistics"
+    ]
+  },
+  {
+    "title": "Index of Services Production (ISP): Technical Advisory Committee Report",
+    "description": "TAC report on the Index of Services Production covering methodology, data sources, and compilation approaches for measuring services sector output growth in India.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/publications-reports/innerpage/2849",
+    "keywords": [
+      "index of services production",
+      "ISP",
+      "services sector",
+      "index numbers",
+      "TAC",
+      "methodology"
+    ],
+    "topics": [
+      "Index Numbers",
+      "Services Sector",
+      "Statistical Methodology"
+    ],
+    "relatedSkills": [
+      "econometrics",
+      "statistics",
+      "data analysis",
+      "official statistics"
+    ]
+  },
+  {
+    "title": "Report of the Expert Committee on Energy Statistics",
+    "description": "Expert committee report on energy statistics covering methodology for energy data compilation, energy balance sheets, renewable energy metrics, and statistical frameworks for India energy sector.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/publications-reports/innerpage/2848",
+    "keywords": [
+      "energy statistics",
+      "expert committee",
+      "energy",
+      "methodology",
+      "energy balance",
+      "renewable energy"
+    ],
+    "topics": [
+      "Energy Statistics",
+      "Expert Committee",
+      "Statistical Methodology"
+    ],
+    "relatedSkills": [
+      "statistics",
+      "data analysis",
+      "official statistics"
+    ]
+  },
+  {
+    "title": "NSS Report No. 596: Household Social Consumption — Health",
+    "description": "NSS report on household social consumption related to health covering healthcare expenditure, morbidity rates, hospitalisation patterns, and access to health services from national sample survey data.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/publications-reports/innerpage/2819",
+    "keywords": [
+      "NSS report",
+      "health",
+      "social consumption",
+      "healthcare expenditure",
+      "morbidity",
+      "hospitalisation",
+      "health statistics"
+    ],
+    "topics": [
+      "Health Statistics",
+      "Social Statistics",
+      "Household Survey",
+      "NSS Report"
+    ],
+    "relatedSkills": [
+      "statistics",
+      "survey",
+      "sampling",
+      "data analysis",
+      "demography"
+    ]
+  },
+  {
+    "title": "EnviStats India: Environment Statistics & FAQ 2026",
+    "description": "India environmental statistics compendium covering natural resource accounts, pollution indicators, climate data, biodiversity metrics, and environmental sustainability indicators.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/publications-reports/innerpage/2821",
+    "keywords": [
+      "EnviStats",
+      "environment",
+      "environmental statistics",
+      "natural resources",
+      "climate",
+      "biodiversity",
+      "pollution"
+    ],
+    "topics": [
+      "Environmental Statistics",
+      "Natural Resources",
+      "Climate Statistics"
+    ],
+    "relatedSkills": [
+      "statistics",
+      "data analysis",
+      "official statistics"
+    ]
+  },
+  {
+    "title": "BRICS Joint Statistical Publication 2026",
+    "description": "Joint statistical publication by BRICS nations presenting comparative socio-economic indicators, demographic data, and development statistics across Brazil, Russia, India, China, and South Africa.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/publications-reports/innerpage/2854",
+    "keywords": [
+      "BRICS",
+      "joint publication",
+      "comparative statistics",
+      "international",
+      "development indicators",
+      "socio-economic"
+    ],
+    "topics": [
+      "International Statistics",
+      "BRICS",
+      "Comparative Statistics"
+    ],
+    "relatedSkills": [
+      "statistics",
+      "data analysis",
+      "official statistics"
+    ]
+  },
+  {
+    "title": "MoSPI Annual Report 2025-26",
+    "description": "Annual report of the Ministry of Statistics and Programme Implementation covering activities of NSO, CSO, NSSO, programme implementation wing, and statistical coordination across Government of India.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/publications-reports/innerpage/2833",
+    "keywords": [
+      "annual report",
+      "MoSPI",
+      "NSO",
+      "CSO",
+      "NSSO",
+      "programme implementation"
+    ],
+    "topics": [
+      "Annual Report",
+      "MoSPI",
+      "Official Statistics"
+    ],
+    "relatedSkills": [
+      "official statistics",
+      "statistics"
+    ]
+  },
+  {
+    "title": "Review of Crop Statistics System in India (2023-24)",
+    "description": "Review report on India crop statistics system under the Improvement of Crop Statistics scheme, covering methodology for crop area and production estimation, sampling designs, and data quality improvements.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/publications-reports/innerpage/2850",
+    "keywords": [
+      "crop statistics",
+      "agricultural statistics",
+      "sampling",
+      "crop area",
+      "production estimation",
+      "data quality"
+    ],
+    "topics": [
+      "Agricultural Statistics",
+      "Crop Statistics",
+      "Sampling",
+      "Survey Methodology"
+    ],
+    "relatedSkills": [
+      "sampling",
+      "survey",
+      "statistics",
+      "data analysis"
+    ]
+  },
+  {
+    "title": "Labour Market Dynamics in Million-plus Cities",
+    "description": "Analysis of labour market dynamics in India million-plus cities using PLFS and ASUSE data, covering employment patterns, sectoral distribution, and urban workforce characteristics.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/publications-reports/innerpage/2846",
+    "keywords": [
+      "labour market",
+      "million-plus cities",
+      "urban",
+      "employment",
+      "PLFS",
+      "workforce",
+      "cities"
+    ],
+    "topics": [
+      "Labour Statistics",
+      "Urban Statistics",
+      "Data Analysis",
+      "Employment"
+    ],
+    "relatedSkills": [
+      "data analysis",
+      "statistics",
+      "econometrics",
+      "demography"
+    ]
+  },
+  {
+    "title": "Compendium of Datasets and Registries in India 2025",
+    "description": "Comprehensive compendium documenting datasets and data registries available across government departments in India, serving as a metadata directory for statistical data resources.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/publications-reports/innerpage/2811",
+    "keywords": [
+      "compendium",
+      "datasets",
+      "registries",
+      "metadata",
+      "data resources",
+      "data management",
+      "directory"
+    ],
+    "topics": [
+      "Data Management",
+      "Metadata",
+      "Data Registries",
+      "Data Resources"
+    ],
+    "relatedSkills": [
+      "data management",
+      "official statistics",
+      "statistics"
+    ]
+  },
+  {
+    "title": "Indian Statistical Service (ISS) Information Portal",
+    "description": "Information portal for the Indian Statistical Service covering service structure, recruitment, career progression, training requirements, and the role of ISS officers in India statistical system.",
+    "source": "MoSPI",
+    "url": "https://mospi.gov.in/indian-statistical-service",
+    "keywords": [
+      "ISS",
+      "Indian Statistical Service",
+      "statistical service",
+      "career",
+      "recruitment",
+      "training"
+    ],
+    "topics": [
+      "Indian Statistical Service",
+      "ISS",
+      "Statistical Careers"
+    ],
+    "relatedSkills": [
+      "official statistics",
+      "statistics"
+    ]
+  }
+];
+
+export function searchOfficialTraining(query, list = mockOfficialTrainingResources) {
+  if (!query || !query.trim()) return [];
+  const q = query.trim().toLowerCase();
+  const qTokens = q.split(/\s+/).filter(Boolean);
+  const isShort = q.length <= 2;
+
+  const scored = [];
+
+  for (const item of list) {
+    const titleLower = item.title.toLowerCase();
+    const descLower = item.description.toLowerCase();
+    const topicsLower = item.topics.map(t => t.toLowerCase());
+    const skillsLower = item.relatedSkills.map(s => s.toLowerCase());
+    const keywordsLower = (item.keywords || []).map(k => k.toLowerCase());
+
+    let score = 0;
+    let matched = false;
+
+    if (isShort) {
+      const exactSkill = skillsLower.some(s => s === q);
+      const exactTopic = topicsLower.some(t => t === q);
+      const exactKeyword = keywordsLower.some(k => k === q);
+      const titleWords = titleLower.split(/[\s,()\-:/&]+/);
+      const titleWordMatch = titleWords.includes(q);
+
+      if (exactSkill || exactTopic || exactKeyword || titleWordMatch) {
+        matched = true;
+        if (exactSkill) score += 60;
+        if (exactTopic) score += 50;
+        if (exactKeyword) score += 45;
+        if (titleWordMatch) score += 40;
+      }
+    } else {
+      for (const skill of skillsLower) {
+        if (skill === q) {
+          score += 60;
+          matched = true;
+        } else if (skill.includes(q)) {
+          score += 35;
+          matched = true;
+        }
+      }
+
+      for (const topic of topicsLower) {
+        if (topic === q) {
+          score += 50;
+          matched = true;
+        } else if (topic.includes(q)) {
+          score += 30;
+          matched = true;
+        }
+      }
+
+      for (const kw of keywordsLower) {
+        if (kw === q) {
+          score += 45;
+          matched = true;
+        } else if (kw.includes(q)) {
+          score += 20;
+          matched = true;
+        }
+      }
+
+      if (titleLower === q) {
+        score += 70;
+        matched = true;
+      } else if (titleLower.includes(q)) {
+        score += 40;
+        matched = true;
+      }
+
+      if (descLower.includes(q)) {
+        score += 15;
+        matched = true;
+      }
+
+      if (qTokens.length > 1) {
+        const allFound = qTokens.every(token =>
+          titleLower.includes(token) ||
+          descLower.includes(token) ||
+          topicsLower.some(t => t.includes(token)) ||
+          skillsLower.some(s => s.includes(token)) ||
+          keywordsLower.some(k => k.includes(token))
+        );
+        if (allFound) {
+          score += 25;
+          matched = true;
+        }
+      }
+    }
+
+    if (matched) {
+      scored.push({ item, score });
+    }
+  }
+
+  scored.sort((a, b) => b.score - a.score);
+  return scored.map(s => s.item);
+}
