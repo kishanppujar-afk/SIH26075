@@ -34,7 +34,8 @@ def test_employees_me(client):
     assert resp.status_code == 200
     data = resp.json()
     assert data["id"] == "EMP-2048"
-    assert data["role"] == "Junior Full Stack Developer"
+    assert data["role"] == "employee"
+    assert data["role_title"] == "Junior Full Stack Developer"
     assert data["targetRole"] == "Senior Cloud Applications Engineer"
     assert "readinessScore" in data
     assert "skillIndex" in data
@@ -143,15 +144,32 @@ def test_progress_and_growth_stage(client):
 
 
 def test_admin_analytics(client):
-    resp_summary = client.get("/api/admin/organization-competency-summary")
+    # Unauthenticated attempt should fail with 401
+    resp_unauth = client.get("/api/admin/organization-competency-summary")
+    assert resp_unauth.status_code == 401
+
+    # Authenticate as admin
+    login_resp = client.post("/api/auth/login", json={
+        "email_or_id": "admin@mospi.gov.in",
+        "password": "AdminPass123!"
+    })
+    assert login_resp.status_code == 200
+    token = login_resp.json()["access_token"]
+    headers = {"Authorization": f"Bearer {token}"}
+
+    resp_summary = client.get("/api/admin/organization-competency-summary", headers=headers)
     assert resp_summary.status_code == 200
     data = resp_summary.json()
     assert "total_employees" in data
     assert "domain_averages" in data
     assert "growth_stage_distribution" in data
 
-    resp_dept = client.get("/api/admin/department-competency/Engineering%20%26%20Digital%20Transformation")
+    resp_dept = client.get("/api/admin/department-competency/labour-statistics", headers=headers)
     assert resp_dept.status_code == 200
+    dept_data = resp_dept.json()
+    assert dept_data["department_id"] == "labour-statistics"
+    assert "domain_averages" in dept_data
+
 
 
 def test_igot_router(client):
@@ -162,3 +180,16 @@ def test_igot_router(client):
     resp_courses = client.get("/api/igot/courses")
     assert resp_courses.status_code == 200
     assert resp_courses.json()["status"] == "pending_official_access"
+
+
+def test_disha_chat_endpoint(client):
+    resp = client.post("/api/ai/chat", json={
+        "message": "What should I focus on next to improve my score?",
+        "conversation_history": []
+    })
+    assert resp.status_code == 200
+    data = resp.json()
+    assert "response" in data
+    assert len(data["response"]) > 10
+    assert data["generated_by"] in ["local_llm", "template_fallback"]
+

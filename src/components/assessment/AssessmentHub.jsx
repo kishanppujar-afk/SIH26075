@@ -36,7 +36,7 @@ export default function AssessmentHub({
           <div className="shrink-0">
             <button
               type="button"
-              onClick={onStartOnboarding}
+              onClick={() => onStartOnboarding(assessments[0]?.id || 'asm1')}
               className="btn-primary-ai group"
             >
               <span>Begin Baseline Discovery</span>
@@ -125,6 +125,16 @@ export default function AssessmentHub({
                         </span>
                       </>
                     )}
+                    {/* Submission Deadline added for Hackathon */}
+                    {isReady && (
+                      <>
+                        <span>•</span>
+                        <span className="flex items-center gap-1 font-semibold text-rose-600 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200">
+                          <Clock className="h-3 w-3" />
+                          Deadline: {assessment.deadline || '2026-10-31'}
+                        </span>
+                      </>
+                    )}
                   </div>
                 </div>
 
@@ -132,7 +142,7 @@ export default function AssessmentHub({
                   {isReady ? (
                     <button
                       type="button"
-                      onClick={onStartOnboarding}
+                      onClick={() => onStartOnboarding(assessment.id)}
                       className="btn-primary w-full sm:w-auto text-xs group"
                     >
                       <span>Discover Baseline</span>
@@ -141,7 +151,7 @@ export default function AssessmentHub({
                   ) : (
                     <button
                       type="button"
-                      onClick={onStartOnboarding}
+                      onClick={() => onStartOnboarding(assessment.id)}
                       className="btn-secondary w-full sm:w-auto text-xs"
                     >
                       Review Baseline

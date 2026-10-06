@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from sqlalchemy import Column, String, Integer, Float, DateTime, Boolean
+from sqlalchemy import Column, String, Integer, Float, DateTime, Boolean, ForeignKey, JSON
 from sqlalchemy.orm import relationship
 from app.core.database import Base
 
@@ -11,8 +11,16 @@ class Employee(Base):
     name = Column(String(150), nullable=False)
     email = Column(String(150), unique=True, index=True, nullable=False)
     hashed_password = Column(String(255), nullable=False)
+    role = Column(String(20), default="employee", nullable=False)  # "trainee" | "trainer" | "admin" | "employee" | "manager"
+    status = Column(String(30), default="pending_approval")  # pending_approval, approved, rejected
+    interests = Column(JSON, default=list)
+    certificates = Column(JSON, default=list)
+    qualifications = Column(JSON, default=list)
+    skills = Column(JSON, default=list)
     designation = Column(String(150), nullable=True)
     department = Column(String(150), default="Engineering & Digital Transformation")
+    department_id = Column(String(50), ForeignKey("departments.id"), nullable=True)
+    manager_id = Column(String(50), ForeignKey("employees.id"), nullable=True)
     role_title = Column(String(150), default="Junior Full Stack Developer")
     target_role = Column(String(150), default="Senior Cloud Applications Engineer")
     education = Column(String(200), nullable=True)
@@ -32,9 +40,17 @@ class Employee(Base):
     updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
     # Relationships
+    department_rel = relationship("Department", back_populates="employees", foreign_keys=[department_id])
+    manager = relationship("Employee", remote_side=[id], back_populates="reports", foreign_keys=[manager_id])
+    reports = relationship("Employee", back_populates="manager", foreign_keys=[manager_id])
     skill_scores = relationship("EmployeeSkillScore", back_populates="employee", cascade="all, delete-orphan")
     score_history = relationship("CompetencyScoreHistory", back_populates="employee", cascade="all, delete-orphan")
     assessment_attempts = relationship("AssessmentAttempt", back_populates="employee", cascade="all, delete-orphan")
     recommendations = relationship("Recommendation", back_populates="employee", cascade="all, delete-orphan")
     quiz_attempts = relationship("QuizAttempt", back_populates="employee", cascade="all, delete-orphan")
     ai_insights = relationship("AiInsight", back_populates="employee", cascade="all, delete-orphan")
+    enrollments = relationship("CourseEnrollment", back_populates="user", cascade="all, delete-orphan")
+    course_feedbacks = relationship("CourseFeedback", back_populates="user", cascade="all, delete-orphan")
+    trainer_library_items = relationship("TrainerLibraryItem", back_populates="trainer", cascade="all, delete-orphan")
+
+

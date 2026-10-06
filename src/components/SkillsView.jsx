@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { mockSkills, mockEmployee } from '../mock/employeeData';
+import { useEmployee } from '../context/SessionContext';
+import { api } from '../api/client';
 import { Filter, Sparkles, TrendingUp, AlertTriangle, CheckCircle2, Compass } from 'lucide-react';
 import Skeleton from './common/Skeleton';
 import EmptyState from './common/EmptyState';
@@ -10,7 +12,9 @@ export default function SkillsView({
   initialSkillId = null,
   setActiveTab = () => {},
 }) {
+  const { employee } = useEmployee();
   const [filterCategory, setFilterCategory] = useState('All');
+  const [skills, setSkills] = useState(mockSkills);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
   const [activeSkillId, setActiveSkillId] = useState(initialSkillId);
@@ -22,11 +26,22 @@ export default function SkillsView({
   }, [initialSkillId]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    let isMounted = true;
+    api.getSkills().then((data) => {
+      if (isMounted && Array.isArray(data) && data.length > 0) {
+        setSkills(data);
+      }
       setIsLoading(false);
       setIsLoaded(true);
-    }, 450);
-    return () => clearTimeout(timer);
+    }).catch((err) => {
+      console.warn('[SkillsView] Using fallback skills:', err.message);
+      setIsLoading(false);
+      setIsLoaded(true);
+    });
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   useEffect(() => {
@@ -40,8 +55,10 @@ export default function SkillsView({
   const categories = ['All', 'Technical', 'Cloud & DevOps', 'Architecture', 'Soft Skills'];
 
   const filteredSkills = filterCategory === 'All'
-    ? mockSkills
-    : mockSkills.filter((s) => s.category === filterCategory);
+    ? skills
+    : skills.filter((s) => s.category === filterCategory);
+
+  const activeEmployee = employee || mockEmployee;
 
   if (isLoading) {
     return (
@@ -78,7 +95,7 @@ export default function SkillsView({
         <div>
           <h1 className="typography-display text-slate-900">Skills &amp; Benchmarks</h1>
           <p className="typography-body text-slate-500 mt-1">
-            Compare your current skill competencies against benchmarks for <strong className="text-slate-700 font-semibold">{mockEmployee.targetRole}</strong>
+            Compare your current skill competencies against benchmarks for <strong className="text-slate-700 font-semibold">{activeEmployee.targetRole}</strong>
           </p>
         </div>
 

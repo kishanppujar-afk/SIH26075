@@ -120,12 +120,15 @@ def record_competency_score(
             existing.status = "Growth Opportunity"
         existing.last_assessed_at = datetime.now(timezone.utc)
     else:
+        # Cap initial score for a brand new skill at max 80 to prevent a fresh skill
+        # from entering at 100 and immediately diluting the readiness denominator.
+        initial_score = min(new_score, 80)
         new_skill_score = EmployeeSkillScore(
             employee_id=employee_id,
             skill_id=skill_id,
-            current_score=new_score,
+            current_score=initial_score,
             target_score=85,
-            status="Proficient" if new_score >= 85 else "Growth Opportunity",
+            status="Proficient" if initial_score >= 85 else "Growth Opportunity",
             trending="up",
             last_assessed_at=datetime.now(timezone.utc)
         )

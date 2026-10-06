@@ -26,8 +26,14 @@ from app.routers import (
     progress_router,
     materials_quiz_router,
     admin_router,
+    manager_router,
     igot_router,
     ai_router,
+    approvals_cms_router,
+    trainer_portal_router,
+    trainee_portal_router,
+    courses_router,
+    competency_router
 )
 
 
@@ -121,8 +127,14 @@ app.include_router(assessments_router, prefix="/api")
 app.include_router(progress_router, prefix="/api")
 app.include_router(materials_quiz_router, prefix="/api")
 app.include_router(admin_router, prefix="/api")
+app.include_router(manager_router, prefix="/api")
 app.include_router(igot_router, prefix="/api")
 app.include_router(ai_router, prefix="/api")
+app.include_router(approvals_cms_router, prefix="/api")
+app.include_router(trainer_portal_router, prefix="/api")
+app.include_router(trainee_portal_router, prefix="/api")
+app.include_router(courses_router, prefix="/api")
+app.include_router(competency_router, prefix="/api")
 
 
 @app.get("/")

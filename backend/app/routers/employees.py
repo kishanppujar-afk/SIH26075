@@ -12,20 +12,28 @@ def serialize_employee(emp: Employee) -> EmployeeResponse:
     return EmployeeResponse(
         id=emp.id,
         name=emp.name,
-        role=emp.role_title,
-        targetRole=emp.target_role,
-        department=emp.department,
-        avatarUrl=emp.avatar_url,
-        readinessScore=emp.readiness_score,
-        skillIndex=emp.skill_index,
-        completedCoursesCount=emp.completed_courses_count,
-        pendingAssessmentsCount=emp.pending_assessments_count,
-        weeklyGoalHours=emp.weekly_goal_hours,
-        weeklyHoursLogged=emp.weekly_hours_logged,
+        role=emp.role, # Fixed to use system role so frontend logic works
+        status=emp.status,
+        system_role=emp.role,
+        role_title=emp.role_title,
+        targetRole=emp.target_role or "Senior Statistical Officer",
+        department=emp.department or "Labour Statistics",
+        department_id=emp.department_id,
+        manager_id=emp.manager_id,
+        avatarUrl=emp.avatar_url or "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+        readinessScore=emp.readiness_score or 75,
+        skillIndex=emp.skill_index or 70,
+        completedCoursesCount=emp.completed_courses_count or 0,
+        pendingAssessmentsCount=emp.pending_assessments_count or 0,
+        weeklyGoalHours=emp.weekly_goal_hours or 6.0,
+        weeklyHoursLogged=emp.weekly_hours_logged or 0.0,
         email=emp.email,
         designation=emp.designation,
         education=emp.education,
-        experience_years=emp.experience_years
+        experience_years=emp.experience_years,
+        interests=emp.interests,
+        certificates=emp.certificates,
+        qualifications=emp.qualifications
     )
 
 
@@ -54,6 +62,12 @@ def update_my_profile(
         current_emp.weekly_goal_hours = update_data.weekly_goal_hours
     if update_data.weekly_hours_logged is not None:
         current_emp.weekly_hours_logged = update_data.weekly_hours_logged
+    if update_data.interests is not None:
+        current_emp.interests = update_data.interests
+    if update_data.certificates is not None:
+        current_emp.certificates = update_data.certificates
+    if update_data.qualifications is not None:
+        current_emp.qualifications = update_data.qualifications
 
     db.commit()
     db.refresh(current_emp)

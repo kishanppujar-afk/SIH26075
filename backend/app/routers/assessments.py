@@ -39,7 +39,8 @@ def get_assessments(db: Session = Depends(get_db)):
             questionCount=a.question_count,
             targetRole=a.target_role,
             description=a.description or "",
-            baselineLevel=a.baseline_level
+            baselineLevel=a.baseline_level,
+            isPractice=bool(a.is_practice)
         )
         for a in assessments
     ]
@@ -61,7 +62,8 @@ def get_assessment(assessment_id: str, db: Session = Depends(get_db)):
         questionCount=a.question_count,
         targetRole=a.target_role,
         description=a.description or "",
-        baselineLevel=a.baseline_level
+        baselineLevel=a.baseline_level,
+        isPractice=bool(a.is_practice)
     )
 
 
@@ -204,7 +206,14 @@ def submit_and_evaluate_attempt(
     attempt.completed_at = datetime.now(timezone.utc)
     attempt.score = eval_result["overallScore"]
 
-    if assessment:
+    is_practice = (
+        getattr(assessment, "is_practice", False)
+        or (assessment and "Practice" in (assessment.category or ""))
+        or (assessment and "Reference" in (assessment.category or ""))
+        or (assessment and assessment.id.startswith("asm-quiz-"))
+    )
+
+    if assessment and not is_practice:
         assessment.status = "Baseline Established"
         assessment.baseline_level = eval_result["baselineLevel"]
         assessment.completed_date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
@@ -225,7 +234,8 @@ def submit_and_evaluate_attempt(
             (Skill.name.ilike(f"%{item['name']}%")) | (Skill.name == item["name"])
         ).first()
 
-        if matched_skill:
+        # Generated/practice quizzes must NEVER mutate official EmployeeSkillScore, readiness_score, or skill_index
+        if matched_skill and not is_practice:
             record_competency_score(
                 db=db,
                 employee_id=current_emp.id,

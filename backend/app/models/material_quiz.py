@@ -16,8 +16,24 @@ class UploadedMaterial(Base):
     extracted_text = Column(Text, nullable=True)
     status = Column(String(50), default="uploaded")  # uploaded, processing, processed, failed
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    deadline = Column(DateTime, nullable=True)
 
     quizzes = relationship("GeneratedQuiz", back_populates="material", cascade="all, delete-orphan")
+    chunks = relationship("MaterialChunk", back_populates="material", cascade="all, delete-orphan", order_by="MaterialChunk.chunk_index")
+
+
+class MaterialChunk(Base):
+    __tablename__ = "material_chunks"
+
+    id = Column(String(50), primary_key=True, index=True)
+    material_id = Column(String(50), ForeignKey("uploaded_materials.id"), nullable=False, index=True)
+    chunk_index = Column(Integer, nullable=False)
+    chunk_text = Column(Text, nullable=False)
+    embedding = Column(JSON, nullable=True)  # List[float] embedding from nomic-embed-text
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    deadline = Column(DateTime, nullable=True)
+
+    material = relationship("UploadedMaterial", back_populates="chunks")
 
 
 class GeneratedQuiz(Base):
@@ -27,7 +43,10 @@ class GeneratedQuiz(Base):
     source_material_id = Column(String(50), ForeignKey("uploaded_materials.id"), nullable=True)
     title = Column(String(255), nullable=False)
     generated_by = Column(String(50), default="local_llm")  # "local_llm" or "template_fallback"
+    is_published = Column(Boolean, default=False)
+    published_assessment_id = Column(String(50), nullable=True)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    deadline = Column(DateTime, nullable=True)
 
     material = relationship("UploadedMaterial", back_populates="quizzes")
     questions = relationship("GeneratedQuizQuestion", back_populates="quiz", cascade="all, delete-orphan")

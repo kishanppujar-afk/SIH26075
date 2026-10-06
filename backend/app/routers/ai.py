@@ -1,14 +1,35 @@
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 from fastapi import APIRouter, Depends, Query
+from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.core.dependencies import get_current_employee
 from app.models.employee import Employee
 from app.models.ai_insight import AiInsight
-from app.ai.local_llm import OllamaCompetencyAnalyzer
+from app.models.competency import EmployeeSkillScore, Skill
+from app.models.learning_resource import Recommendation
+from app.models.assessment import AssessmentAttempt, Assessment
+from app.ai.local_llm import OllamaCompetencyAnalyzer, OllamaDishaChat
 
 router = APIRouter(prefix="/ai", tags=["AI Telemetry & Insights"])
 analyzer = OllamaCompetencyAnalyzer()
+disha_chat = OllamaDishaChat()
+
+
+class ChatMessage(BaseModel):
+    role: str
+    content: str
+
+
+class ChatRequest(BaseModel):
+    message: str = Field(..., min_length=1, description="User's query")
+    conversation_history: Optional[List[ChatMessage]] = Field(default=[], description="Recent conversation turns")
+
+
+class ChatResponse(BaseModel):
+    response: str
+    generated_by: str
+
 
 
 @router.get("/insights")
@@ -62,3 +83,93 @@ async def analyze_skill_gap_with_ai(
         target_role=role,
         department=current_emp.department
     )
+
+
+@router.post("/chat", response_model=ChatResponse)
+async def chat_with_disha(
+    req: ChatRequest,
+    current_emp: Employee = Depends(get_current_employee),
+    db: Session = Depends(get_db)
+):
+    """
+    Directional AI assistant ('Disha') for officials in India's National Statistical System.
+    Analyzes the employee's current skill gaps, recommended courses, and assessments,
+    and returns concise, guiding next steps via gemma3:4b (with deterministic fallback).
+    """
+    # 1. Fetch employee skill scores + targets
+    scores = (
+        db.query(EmployeeSkillScore)
+        .join(Skill, EmployeeSkillScore.skill_id == Skill.id)
+        .filter(EmployeeSkillScore.employee_id == current_emp.id)
+        .all()
+    )
+    gaps = []
+    for s in scores:
+        target = s.target_score or 85
+        delta = target - s.current_score
+        gaps.append({
+            "skill_name": s.skill.name if s.skill else s.skill_id,
+            "current_score": s.current_score,
+            "target_score": target,
+            "gap": max(0, delta),
+            "status": s.status or "On Track"
+        })
+    gaps.sort(key=lambda x: x["gap"], reverse=True)
+    top_gaps = gaps[:5]
+
+    # 2. Fetch employee recommendations
+    recs = db.query(Recommendation).filter(Recommendation.employee_id == current_emp.id).limit(4).all()
+    recommendations_data = [
+        {
+            "title": r.title,
+            "type": r.type,
+            "provider": r.provider,
+            "impact_skill": r.impact_skill,
+            "match_score": r.match_score
+        }
+        for r in recs
+    ]
+
+    # 3. Fetch recent completed assessment attempts
+    attempts = (
+        db.query(AssessmentAttempt)
+        .filter(
+            AssessmentAttempt.employee_id == current_emp.id,
+            AssessmentAttempt.status == "completed"
+        )
+        .order_by(AssessmentAttempt.completed_at.desc())
+        .limit(3)
+        .all()
+    )
+    assessments_data = [
+        {
+            "assessment_title": a.assessment.title if a.assessment else a.assessment_id,
+            "score": a.score or 0.0,
+            "completed_at": a.completed_at.isoformat() if a.completed_at else None
+        }
+        for a in attempts
+    ]
+
+    context = {
+        "name": current_emp.name,
+        "designation": current_emp.designation or "Junior Statistical Officer",
+        "department": current_emp.department,
+        "target_role": current_emp.target_role,
+        "readiness_score": current_emp.readiness_score,
+        "skill_index": current_emp.skill_index or 70,
+        "top_gaps": top_gaps,
+        "recommendations": recommendations_data,
+        "recent_assessments": assessments_data
+    }
+
+    history = [
+        {"role": turn.role, "content": turn.content}
+        for turn in (req.conversation_history or [])
+    ]
+
+    return await disha_chat.generate_chat_response(
+        employee_context=context,
+        conversation_history=history,
+        user_message=req.message
+    )
+

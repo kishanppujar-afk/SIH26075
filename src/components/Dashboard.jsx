@@ -3,7 +3,7 @@ import {
   ArrowUpRight,
   Sparkles
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   mockEmployee,
   mockSkills,
@@ -15,26 +15,71 @@ import Skeleton from './common/Skeleton';
 import Card from './common/Card';
 import StudyLampIllustration from './StudyLampIllustration';
 import KpiStatsRow from './KpiStatsRow';
-import { useSession } from '../context/SessionContext';
+import { useSession, useEmployee } from '../context/SessionContext';
+import { api } from '../api/client';
+import OnboardingTutorial from './OnboardingTutorial';
 
 export default function Dashboard({ setActiveTab, onOpenDevelopmentPath }) {
   const { displayName } = useSession();
-  // Simulated initial mount loading window (450ms)
+  const { employee } = useEmployee();
+  const activeEmployee = employee || mockEmployee;
+  const [skills, setSkills] = useState(mockSkills);
+  const [recommendations, setRecommendations] = useState(mockRecommendations);
+  const [announcements, setAnnouncements] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [showTutorial, setShowTutorial] = useState(false);
 
   useEffect(() => {
-    const loadTimer = setTimeout(() => {
-      setIsLoading(false);
-    }, 450);
+    const hasSeen = localStorage.getItem(`skillstat_tutorial_seen_${activeEmployee?.id || 'default'}`);
+    if (!hasSeen) {
+      if (activeEmployee?.created_at) {
+        const createdDate = new Date(activeEmployee.created_at);
+        const now = new Date();
+        const diffHours = (now - createdDate) / (1000 * 60 * 60);
+        
+        if (diffHours > 2) {
+          // Old user (created more than 2 hours ago)
+          localStorage.setItem(`skillstat_tutorial_seen_${activeEmployee?.id || 'default'}`, 'true');
+        } else {
+          setShowTutorial(true);
+        }
+      } else if (!activeEmployee) {
+        // If still loading, wait
+      } else {
+        // Fallback for mock employee
+        setShowTutorial(true);
+      }
+    }
+  }, [activeEmployee]);
 
-    const barTimer = setTimeout(() => {
-      setIsLoaded(true);
-    }, 550);
+  const handleTutorialComplete = () => {
+    localStorage.setItem(`skillstat_tutorial_seen_${activeEmployee?.id || 'default'}`, 'true');
+    setShowTutorial(false);
+  };
+
+  useEffect(() => {
+    let isMounted = true;
+    Promise.allSettled([
+      api.getSkills(),
+      api.getRecommendations(),
+      api.getAnnouncements().catch(() => [])
+    ]).then(([skillsRes, recsRes, annRes]) => {
+      if (!isMounted) return;
+      if (skillsRes.status === 'fulfilled' && Array.isArray(skillsRes.value) && skillsRes.value.length > 0) {
+        setSkills(skillsRes.value);
+      }
+      if (recsRes.status === 'fulfilled' && Array.isArray(recsRes.value) && recsRes.value.length > 0) {
+        setRecommendations(recsRes.value);
+      }
+      setIsLoading(false);
+      setTimeout(() => {
+        if (isMounted) setIsLoaded(true);
+      }, 100);
+    });
 
     return () => {
-      clearTimeout(loadTimer);
-      clearTimeout(barTimer);
+      isMounted = false;
     };
   }, []);
 
@@ -59,6 +104,9 @@ export default function Dashboard({ setActiveTab, onOpenDevelopmentPath }) {
 
   return (
     <div className="space-y-6 animate-fade-in">
+      <AnimatePresence>
+        {showTutorial && <OnboardingTutorial onComplete={handleTutorialComplete} />}
+      </AnimatePresence>
       {/* Welcome Banner */}
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-teal-300 via-teal-400 to-teal-500 p-6 sm:p-7 text-white shadow-md hover:shadow-lg transition-all duration-300">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -68,10 +116,10 @@ export default function Dashboard({ setActiveTab, onOpenDevelopmentPath }) {
               <span>SkillStat AI Intelligence</span>
             </div>
             <h1 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-white drop-shadow-xs">
-              Welcome back, {displayName || mockEmployee.name}!
+              Welcome back, {displayName || activeEmployee.name}!
             </h1>
             <p className="mt-1 text-teal-50 text-sm font-normal leading-relaxed">
-              You're currently working towards <span className="font-semibold text-white">{mockEmployee.targetRole}</span>.
+              You're currently working towards <span className="font-semibold text-white">{activeEmployee.targetRole}</span>.
               Growth opportunities are trending down by 12% this month.
             </p>
           </div>
@@ -92,6 +140,17 @@ export default function Dashboard({ setActiveTab, onOpenDevelopmentPath }) {
         </div>
       </div>
 
+      {/* Announcements & Notifications Banner */}
+      <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-start gap-4 shadow-sm">
+        <div className="bg-amber-100 p-2 rounded-lg text-amber-600 shrink-0">
+          <Sparkles className="h-5 w-5" />
+        </div>
+        <div>
+          <h3 className="font-semibold text-amber-900 text-sm">National Doppler Radar Training Session Live</h3>
+          <p className="text-xs text-amber-700 mt-0.5">Join Dr. Roy for a live session on DWR echo interpretation this Friday. (MoES Announcement)</p>
+        </div>
+      </div>
+
       <KpiStatsRow />
 
       {/* Middle Row: Priority Competencies & AI Recommendations */}
@@ -101,7 +160,7 @@ export default function Dashboard({ setActiveTab, onOpenDevelopmentPath }) {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="typography-h2 text-slate-900">Key Competencies &amp; Target Alignment</h2>
-              <p className="typography-caption text-slate-500">Comparison against target benchmark for {mockEmployee.targetRole}</p>
+              <p className="typography-caption text-slate-500">Comparison against target benchmark for {activeEmployee.targetRole}</p>
             </div>
             <button
               onClick={() => setActiveTab('skills')}
@@ -112,7 +171,7 @@ export default function Dashboard({ setActiveTab, onOpenDevelopmentPath }) {
           </div>
 
           <div className="space-y-3.5">
-            {mockSkills.slice(0, 4).map((skill, sIdx) => {
+            {skills.slice(0, 4).map((skill, sIdx) => {
               const isOpportunity = skill.status === 'Growth Opportunity' || skill.status === 'Skill Gap';
               const isExceeds = skill.status === 'Exceeds Target';
               const isProficient = skill.status === 'Proficient' || skill.status === 'On Track';
@@ -292,7 +351,7 @@ export default function Dashboard({ setActiveTab, onOpenDevelopmentPath }) {
             },
           }}
         >
-          {mockRecommendations.map((rec) => (
+          {recommendations.map((rec) => (
             <motion.div
               key={rec.id}
               variants={{
@@ -304,7 +363,7 @@ export default function Dashboard({ setActiveTab, onOpenDevelopmentPath }) {
                 },
               }}
               onClick={() => {
-                const targetSkill = mockSkills.find((s) => s.name === rec.impactSkill);
+                const targetSkill = skills.find((s) => s.name === rec.impactSkill);
                 if (targetSkill) {
                   if (onOpenDevelopmentPath) {
                     onOpenDevelopmentPath(targetSkill.id);
@@ -346,3 +405,4 @@ export default function Dashboard({ setActiveTab, onOpenDevelopmentPath }) {
     </div>
   );
 }
+

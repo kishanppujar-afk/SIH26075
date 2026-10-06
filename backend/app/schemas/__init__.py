@@ -1,6 +1,7 @@
 from app.schemas.employee import (
-    EmployeeResponse, EmployeeUpdate, TokenResponse, LoginRequest, RegisterRequest
+    EmployeeResponse, EmployeeUpdate, TokenResponse, LoginRequest, RegisterRequest, AuthMeResponse
 )
+
 from app.schemas.competency import (
     SkillResponse, CompetencyDomainResponse, DevelopmentPathResponse,
     ProgressResponse, GrowthStageResponse

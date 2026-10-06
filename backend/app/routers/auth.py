@@ -4,7 +4,8 @@ from app.core.database import get_db
 from app.core.security import verify_password, get_password_hash, create_access_token
 from app.core.dependencies import get_current_employee
 from app.models.employee import Employee
-from app.schemas.employee import TokenResponse, LoginRequest, RegisterRequest, EmployeeResponse
+from app.schemas.employee import TokenResponse, LoginRequest, RegisterRequest, EmployeeResponse, AuthMeResponse
+from app.routers.employees import serialize_employee
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
@@ -25,81 +26,83 @@ def register(req: RegisterRequest, db: Session = Depends(get_db)):
         name=req.name,
         email=req.email,
         hashed_password=hashed,
+        role=req.role or "trainee",
+        status="pending_approval",
         role_title=req.role_title or "Junior Full Stack Developer",
         target_role=req.target_role or "Senior Cloud Applications Engineer",
-        department=req.department or "Engineering & Digital Transformation"
+        department=req.department or "Labour Statistics"
     )
     db.add(new_emp)
     db.commit()
     db.refresh(new_emp)
 
-    token = create_access_token(new_emp.id)
+    if new_emp.status == "pending_approval":
+        return TokenResponse(
+            access_token="pending",
+            token_type="bearer",
+            role=new_emp.role,
+            employee=serialize_employee(new_emp)
+        )
+
+    token = create_access_token(new_emp.id, role=new_emp.role, extra_claims={"department_id": new_emp.department_id})
     return TokenResponse(
         access_token=token,
         token_type="bearer",
-        employee=EmployeeResponse(
-            id=new_emp.id,
-            name=new_emp.name,
-            role=new_emp.role_title,
-            targetRole=new_emp.target_role,
-            department=new_emp.department,
-            avatarUrl=new_emp.avatar_url,
-            readinessScore=new_emp.readiness_score,
-            skillIndex=new_emp.skill_index,
-            completedCoursesCount=new_emp.completed_courses_count,
-            pendingAssessmentsCount=new_emp.pending_assessments_count,
-            weeklyGoalHours=new_emp.weekly_goal_hours,
-            weeklyHoursLogged=new_emp.weekly_hours_logged,
-            email=new_emp.email
-        )
+        role=new_emp.role,
+        employee=serialize_employee(new_emp)
     )
 
 
 @router.post("/login", response_model=TokenResponse)
 def login(req: LoginRequest, db: Session = Depends(get_db)):
+    identifier = req.email_or_id.strip()
     emp = db.query(Employee).filter(
-        (Employee.email == req.email_or_id) | (Employee.id == req.email_or_id)
+        (Employee.email.ilike(identifier)) |
+        (Employee.id.ilike(identifier)) |
+        (Employee.email.ilike(f"{identifier}@mospi.gov.in"))
     ).first()
 
     if not emp or not verify_password(req.password, emp.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid credentials. Use 'EMP-2048' and 'password123'."
+            detail="Invalid credentials. Please check your username/email and password."
         )
 
-    token = create_access_token(emp.id)
+    if emp.status == "pending_approval":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Your registration is pending approval by the MoES/IMD Administrator."
+        )
+    
+    if emp.status == "rejected":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Your registration has been rejected."
+        )
+
+    token = create_access_token(emp.id, role=emp.role, extra_claims={"department_id": emp.department_id})
     return TokenResponse(
         access_token=token,
         token_type="bearer",
-        employee=EmployeeResponse(
-            id=emp.id,
-            name=emp.name,
-            role=emp.role_title,
-            targetRole=emp.target_role,
-            department=emp.department,
-            avatarUrl=emp.avatar_url,
-            readinessScore=emp.readiness_score,
-            skillIndex=emp.skill_index,
-            completedCoursesCount=emp.completed_courses_count,
-            pendingAssessmentsCount=emp.pending_assessments_count,
-            weeklyGoalHours=emp.weekly_goal_hours,
-            weeklyHoursLogged=emp.weekly_hours_logged,
-            email=emp.email,
-            designation=emp.designation,
-            education=emp.education,
-            experience_years=emp.experience_years
-        )
+        role=emp.role,
+        employee=serialize_employee(emp)
     )
 
 
-@router.get("/me", response_model=EmployeeResponse)
+@router.get("/me", response_model=AuthMeResponse)
 def get_current_user_profile(current_emp: Employee = Depends(get_current_employee)):
-    return EmployeeResponse(
+    return AuthMeResponse(
         id=current_emp.id,
         name=current_emp.name,
-        role=current_emp.role_title,
+        email=current_emp.email,
+        role=current_emp.role,
+        status=current_emp.status,
+        system_role=current_emp.role,
+        role_title=current_emp.role_title,
         targetRole=current_emp.target_role,
         department=current_emp.department,
+        department_id=current_emp.department_id,
+        manager_id=current_emp.manager_id,
         avatarUrl=current_emp.avatar_url,
         readinessScore=current_emp.readiness_score,
         skillIndex=current_emp.skill_index,
@@ -107,8 +110,11 @@ def get_current_user_profile(current_emp: Employee = Depends(get_current_employe
         pendingAssessmentsCount=current_emp.pending_assessments_count,
         weeklyGoalHours=current_emp.weekly_goal_hours,
         weeklyHoursLogged=current_emp.weekly_hours_logged,
-        email=current_emp.email,
         designation=current_emp.designation,
         education=current_emp.education,
-        experience_years=current_emp.experience_years
+        experience_years=current_emp.experience_years,
+        interests=current_emp.interests,
+        certificates=current_emp.certificates,
+        qualifications=current_emp.qualifications
     )
+

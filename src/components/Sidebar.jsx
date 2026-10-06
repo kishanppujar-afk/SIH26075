@@ -8,6 +8,7 @@ import {
   TrendingUp,
 } from 'lucide-react';
 import { mockEmployee } from '../mock/employeeData';
+import { useEmployee } from '../context/SessionContext';
 import GrowthTreeWidget from './GrowthTreeWidget';
 
 // Toggle flag to easily disable dev preview controls for final hackathon demo
@@ -23,13 +24,15 @@ const navigationItems = [
 export default function Sidebar({ activeTab, setActiveTab }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const { employee } = useEmployee();
 
   // Local state to preview growth stages on demand without altering real employee data
   const [previewScore, setPreviewScore] = useState(null);
 
   const pathSegment = location.pathname.replace(/^\//, '') || 'dashboard';
   const isPreviewing = previewScore !== null;
-  const effectiveScore = isPreviewing ? previewScore : mockEmployee.readinessScore;
+  const currentReadiness = employee?.readinessScore ?? mockEmployee.readinessScore;
+  const effectiveScore = isPreviewing ? previewScore : currentReadiness;
 
   return (
     <aside className="w-64 border-r border-slate-200/80 bg-[#F2F8FA] flex flex-col shrink-0 min-h-[calc(100vh-57px)] max-h-[calc(100vh-57px)] overflow-y-auto">
@@ -110,7 +113,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
                 onClick={() => setPreviewScore(null)}
                 className="text-[10px] font-semibold text-amber-800 hover:text-amber-950 underline underline-offset-2 transition-colors cursor-pointer"
               >
-                Reset to {mockEmployee.readinessScore}%
+                Reset to {currentReadiness}%
               </button>
             </div>
           )}
@@ -128,16 +131,16 @@ export default function Sidebar({ activeTab, setActiveTab }) {
               </span>
             </div>
             <span className="text-[11px] font-bold text-teal-600">
-              {mockEmployee.readinessScore}%
+              {currentReadiness}%
             </span>
           </div>
           <p className="mt-1.5 text-xs font-semibold text-slate-800 leading-snug">
-            {mockEmployee.targetRole}
+            {employee?.targetRole ?? mockEmployee.targetRole}
           </p>
           <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-teal-100">
             <div
               className="h-full rounded-full bg-teal-500 transition-all duration-700 ease-out"
-              style={{ width: `${mockEmployee.readinessScore}%` }}
+              style={{ width: `${currentReadiness}%` }}
             />
           </div>
         </div>

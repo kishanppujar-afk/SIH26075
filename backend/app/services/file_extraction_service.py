@@ -33,6 +33,12 @@ def extract_text_from_file(file_path: str, mime_type: str) -> Tuple[str, int]:
             full_text = "\n\n".join(text_parts).strip()
             return full_text, len(full_text)
 
+        elif "doc" in mime_type.lower() or file_path.lower().endswith(".docx"):
+            import docx
+            doc = docx.Document(file_path)
+            full_text = "\n".join([para.text for para in doc.paragraphs]).strip()
+            return full_text, len(full_text)
+
         # Plain text, markdown, csv, or json
         with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
             full_text = f.read().strip()

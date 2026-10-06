@@ -9,11 +9,13 @@ import CoursesView from './components/CoursesView';
 import AssessmentsView from './components/AssessmentsView';
 import ProfileView from './components/ProfileView';
 import LoginView from './components/LoginView';
-import { SessionProvider } from './context/SessionContext';
+import DishaChatWidget from './components/chat/DishaChatWidget';
+import { SessionProvider, useEmployee } from './context/SessionContext';
 
 const VALID_TABS = ['dashboard', 'skills', 'courses', 'assessments', 'profile', 'login'];
 
 function AppContent() {
+  const { employee } = useEmployee();
   const location = useLocation();
   const navigate = useNavigate();
   const [isAssessmentFocused, setIsAssessmentFocused] = useState(false);
@@ -136,6 +138,7 @@ function AppContent() {
               </AnimatePresence>
             </main>
           </div>
+          <DishaChatWidget key={employee?.id || 'guest'} />
         </motion.div>
       )}
     </AnimatePresence>

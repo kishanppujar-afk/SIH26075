@@ -29,6 +29,12 @@ def setup_test_db():
     seed_learning_resources(db)
     seed_assessments_and_questions(db)
     seed_demo_employee(db)
+    
+    # Set all employees to approved for tests to pass
+    from app.models.employee import Employee
+    db.query(Employee).update({"status": "approved"})
+    db.commit()
+    
     db.close()
     yield
     Base.metadata.drop_all(bind=test_engine)

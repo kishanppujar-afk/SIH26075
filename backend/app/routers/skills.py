@@ -51,6 +51,14 @@ def get_skills(
             description=skill.description
         ))
 
+    # Prioritize skills with active employee scores, sorted by gap delta descending
+    response.sort(
+        key=lambda item: (
+            0 if item.id in score_map else 1,
+            -(item.targetScore - item.currentScore)
+        )
+    )
+
     return response
 
 

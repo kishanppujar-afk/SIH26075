@@ -23,6 +23,8 @@ import {
   mockOfficialTrainingResources,
   mockEmployee
 } from '../mock/employeeData';
+import { useEmployee } from '../context/SessionContext';
+import { api } from '../api/client';
 
 /**
  * DevelopmentPath Component
@@ -42,20 +44,46 @@ export default function DevelopmentPath({
   onNavigateToDashboard,
   onSelectSkill
 }) {
+  const { employee } = useEmployee();
   const [expandedResources, setExpandedResources] = React.useState({});
   const [isDescExpanded, setIsDescExpanded] = React.useState(false);
+  const [devPathData, setDevPathData] = React.useState(null);
 
-  // 1. Resolve selected skill (fallback to s4 Docker & Container Orchestration if not specified)
-  const skill = useMemo(() => {
-    return mockSkills.find((s) => s.id === skillId) || mockSkills[3]; // default s4
+  // Fetch development path on-demand when skillId changes
+  React.useEffect(() => {
+    const targetId = skillId || 's4';
+    let isMounted = true;
+    api.getDevelopmentPath(targetId).then((data) => {
+      if (isMounted && data) {
+        setDevPathData(data);
+      }
+    }).catch((err) => {
+      console.warn('[DevelopmentPath] Using fallback client heuristic:', err.message);
+    });
+
+    return () => {
+      isMounted = false;
+    };
   }, [skillId]);
 
-  const isOpportunity = skill.status === 'Growth Opportunity' || skill.status === 'Skill Gap';
-  const isExceeds = skill.status === 'Exceeds Target';
-  const gapSize = Math.max(0, skill.targetScore - skill.currentScore);
+  // 1. Resolve selected skill (prefer API data, fallback to mockSkills)
+  const skill = useMemo(() => {
+    if (devPathData?.skill && devPathData.skill.id === skillId) {
+      return devPathData.skill;
+    }
+    return mockSkills.find((s) => s.id === skillId) || mockSkills[3]; // default s4
+  }, [skillId, devPathData]);
+
+  const isOpportunity = devPathData?.isOpportunity ?? (skill.status === 'Growth Opportunity' || skill.status === 'Skill Gap');
+  const isExceeds = devPathData?.isExceeds ?? (skill.status === 'Exceeds Target');
+  const gapSize = devPathData?.gap ?? Math.max(0, skill.targetScore - skill.currentScore);
+  const activeEmployee = employee || mockEmployee;
 
   // 2. Find relevant official NSSTA / MoSPI resources (strictly verified URLs from catalogue)
   const recommendedResources = useMemo(() => {
+    if (devPathData?.recommendedResources && devPathData.recommendedResources.length > 0) {
+      return devPathData.recommendedResources;
+    }
     if (!skill) return [];
     const skillNameLower = skill.name.toLowerCase();
     const catLower = (skill.category || '').toLowerCase();
@@ -202,7 +230,7 @@ export default function DevelopmentPath({
               {skill.name}
             </h1>
             <p className="mt-1 text-sm text-slate-500">
-              Integrated development pathway aligned to <strong className="text-slate-700 font-semibold">{mockEmployee.targetRole}</strong>
+              Integrated development pathway aligned to <strong className="text-slate-700 font-semibold">{activeEmployee.targetRole}</strong>
             </p>
           </div>
 

@@ -56,7 +56,7 @@ def test_evaluate_assessment_submission():
     opt2_unsure = AssessmentOption(id="opt2-unsure", question_id="q2", text="Unsure", is_correct=False, is_uncertainty_option=True)
     q2.options = [opt2_correct, opt2_wrong, opt2_unsure]
 
-    # Test 1: q1 correct (100), q2 unsure (60) -> overall 80.0
+    # Test 1: q1 correct (100 -> capped at 80 because single question), q2 unsure (60) -> overall 80.0
     result = evaluate_assessment_submission([q1, q2], {"q1": "opt-correct", "q2": "opt2-unsure"})
     assert result["overallScore"] == 80.0
     assert len(result["confidentCorrect"]) == 1
@@ -65,9 +65,29 @@ def test_evaluate_assessment_submission():
     assert result["growthOpportunities"][0]["id"] == "q2"
     assert result["growthOpportunities"][0]["isUncertain"] is True
     assert result["growthOpportunities"][0]["growthResource"]["title"] == "Docker Course"
+    # Single-question competency entry in capabilityList should be capped at 80
+    cap_map = {c["name"]: c["score"] for c in result["capabilityList"]}
+    assert cap_map["Cloud Architecture"] == 80
+    assert cap_map["Docker & Kubernetes"] == 60
 
     # Test 2: q1 wrong (30), q2 wrong (30) -> overall 30.0
     result_wrong = evaluate_assessment_submission([q1, q2], {"q1": "opt-wrong", "q2": "opt2-wrong"})
     assert result_wrong["overallScore"] == 30.0
     assert len(result_wrong["confidentCorrect"]) == 0
     assert len(result_wrong["growthOpportunities"]) == 2
+
+    # Test 3: Multi-question competency can reach 100
+    q3 = AssessmentQuestion(
+        id="q3",
+        assessment_id="asm1",
+        topic="Compute Advanced",
+        competency="Cloud Architecture",  # Same competency as q1 (now 2 questions)
+        scenario="Scenario 3",
+        question_text="Question 3",
+        correct_option_id="opt3-correct",
+        options=[AssessmentOption(id="opt3-correct", question_id="q3", text="Correct", is_correct=True, is_uncertainty_option=False)]
+    )
+    result_multi = evaluate_assessment_submission([q1, q3], {"q1": "opt-correct", "q3": "opt3-correct"})
+    cap_multi_map = {c["name"]: c["score"] for c in result_multi["capabilityList"]}
+    # Evaluated by 2 questions, both correct -> reaches 100
+    assert cap_multi_map["Cloud Architecture"] == 100

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { TrendingUp, Award, CheckCircle2, Clock } from 'lucide-react';
 import { mockEmployee } from '../mock/employeeData';
+import { useEmployee } from '../context/SessionContext';
 import { useCountUp } from '../hooks/useCountUp';
 import Card from './common/Card';
 
@@ -8,6 +9,7 @@ import Card from './common/Card';
  * Shared KPI row used by Dashboard and ProfileView so counters stay in sync.
  */
 export default function KpiStatsRow() {
+  const { employee } = useEmployee();
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -17,10 +19,15 @@ export default function KpiStatsRow() {
     return () => clearTimeout(barTimer);
   }, []);
 
-  const readinessCount = useCountUp(mockEmployee.readinessScore, 800);
-  const skillIndexCount = useCountUp(mockEmployee.skillIndex, 800);
-  const completedCoursesCount = useCountUp(mockEmployee.completedCoursesCount, 800);
-  const weeklyHoursCount = useCountUp(mockEmployee.weeklyHoursLogged, 800, 1);
+  const readinessScore = employee?.readinessScore ?? mockEmployee.readinessScore;
+  const skillIndex = employee?.skillIndex ?? mockEmployee.skillIndex;
+  const completedCoursesCountVal = employee?.completedCoursesCount ?? mockEmployee.completedCoursesCount;
+  const weeklyHoursLoggedVal = employee?.weeklyHoursLogged ?? mockEmployee.weeklyHoursLogged;
+
+  const readinessCount = useCountUp(readinessScore, 800);
+  const skillIndexCount = useCountUp(skillIndex, 800);
+  const completedCoursesCount = useCountUp(completedCoursesCountVal, 800);
+  const weeklyHoursCount = useCountUp(weeklyHoursLoggedVal, 800, 1);
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

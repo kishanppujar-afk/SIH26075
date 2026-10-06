@@ -14,6 +14,7 @@ class AssessmentResponse(BaseModel):
     targetRole: str = Field(..., serialization_alias="targetRole")
     description: str
     baselineLevel: Optional[str] = Field(None, serialization_alias="baselineLevel")
+    isPractice: bool = Field(False, serialization_alias="isPractice")
 
     model_config = ConfigDict(populate_by_name=True, from_attributes=True)
 

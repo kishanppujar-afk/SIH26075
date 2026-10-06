@@ -26,9 +26,8 @@ dist-ssr
 # Python
 .venv
 backend/.venv
+venv/
 __pycache__
 *.pyc
-*.db
-backend/*.db
 backend/uploads
 backend/.pytest_cache

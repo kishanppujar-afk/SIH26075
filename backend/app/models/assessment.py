@@ -18,9 +18,16 @@ class Assessment(Base):
     completed_date = Column(String(50), nullable=True)
     baseline_level = Column(String(100), nullable=True)  # e.g. "Solid Foundation (88%)"
     status = Column(String(100), default="Ready for Baseline Discovery")  # Ready for Baseline Discovery, Baseline Established
+    is_practice = Column(Boolean, default=False)  # Practice / document quizzes do not affect official employee metrics
+    
+    # New fields for CAPACITY CONNECT
+    deadline = Column(String(50), nullable=True)
+    trainer_id = Column(String(50), ForeignKey("employees.id"), nullable=True)
+    passing_score = Column(Integer, default=75)
 
     questions = relationship("AssessmentQuestion", back_populates="assessment", cascade="all, delete-orphan")
     attempts = relationship("AssessmentAttempt", back_populates="assessment", cascade="all, delete-orphan")
+    trainer = relationship("Employee", foreign_keys=[trainer_id])
 
 
 class AssessmentQuestion(Base):

@@ -106,6 +106,10 @@ def evaluate_assessment_submission(
     capability_list = []
     for comp_name, scores in competency_scores.items():
         comp_avg = int(round(sum(scores) / len(scores)))
+        # Cap single-question competency evaluation at 80: 1 question is weak evidence
+        # of full mastery and cannot award a perfect 100 outright.
+        if len(scores) < 2:
+            comp_avg = min(comp_avg, 80)
         target = 85
         status = derive_status(comp_avg, target)
         capability_list.append({

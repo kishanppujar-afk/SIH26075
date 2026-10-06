@@ -1,3 +1,4 @@
+from app.models.capacity_connect import TrainerLibraryItem
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
@@ -106,6 +107,23 @@ def get_recommendations(
         recs = db.query(Recommendation).all()
 
     response = []
+    
+    # Merge Trainer Library Items
+    trainer_items = db.query(TrainerLibraryItem).all()
+    for item in trainer_items:
+        response.append(RecommendationResponse(
+            id=item.id,
+            title=item.title,
+            type="Video Lecture" if item.resource_type == "recorded_lecture" else "Study Guide",
+            provider=item.trainer.name if item.trainer else "Internal Trainer",
+            duration=item.file_size_label or "N/A",
+            impactSkill=item.subject or "General Upskilling",
+            matchScore=99,
+            isUrgent=False,
+            reason=item.description or "Trainer uploaded material",
+            url=item.media_url
+        ))
+
     for r in recs:
         response.append(RecommendationResponse(
             id=r.id,
@@ -121,3 +139,5 @@ def get_recommendations(
         ))
 
     return response
+
+

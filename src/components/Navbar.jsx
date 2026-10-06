@@ -4,15 +4,35 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { mockEmployee, searchOfficialTraining } from '../mock/employeeData';
 import { useSession } from '../context/SessionContext';
+import { api } from '../api/client';
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const { displayName } = useSession();
+  const { displayName, employee } = useSession();
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
   const [isDebouncing, setIsDebouncing] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [announcements, setAnnouncements] = useState([]);
   const searchRef = useRef(null);
+  const notifRef = useRef(null);
+
+  useEffect(() => {
+    api.getAnnouncements().then(res => {
+      if (Array.isArray(res)) setAnnouncements(res);
+    }).catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (notifRef.current && !notifRef.current.contains(event.target)) {
+        setShowNotifications(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   // Debounce keystroke filtering at 200ms
   useEffect(() => {
@@ -61,12 +81,12 @@ export default function Navbar() {
         </div>
         <div>
           <div className="flex items-center gap-2">
-            <span className="font-bold text-slate-900 tracking-tight text-lg">SkillStat AI</span>
+            <span className="font-bold text-slate-900 tracking-tight text-lg">CAPACITY CONNECT</span>
             <span className="rounded-full bg-teal-50 px-2 py-0.5 text-xs font-semibold text-teal-700 border border-teal-200/60">
-              Employee Portal
+              MoES / IMD
             </span>
           </div>
-          <p className="text-xs text-slate-600 font-normal">Autonomous Career Growth &amp; Skill Intelligence</p>
+          <p className="text-xs text-slate-600 font-normal">Digital Capacity Building &amp; Learning Management</p>
         </div>
       </div>
 
@@ -284,13 +304,60 @@ export default function Navbar() {
         </div>
 
         {/* Notifications */}
-        <button
-          title="Notifications"
-          className="relative rounded-xl p-2 text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors"
-        >
-          <Bell className="h-5 w-5" />
-          <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-opportunity-500 ring-2 ring-white"></span>
-        </button>
+                  <div className="relative" ref={notifRef}>
+            <button
+              type="button"
+              onClick={() => setShowNotifications(!showNotifications)}
+              title="Notifications"
+              className="relative rounded-xl p-2 text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors"
+            >
+              <Bell className="h-5 w-5" />
+              {announcements.length > 0 && (
+                <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-opportunity-500 ring-2 ring-white"></span>
+              )}
+            </button>
+            
+            <AnimatePresence>
+              {showNotifications && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute right-0 mt-2 w-80 bg-white border border-slate-200 shadow-xl rounded-2xl z-50 overflow-hidden"
+                >
+                  <div className="p-4 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+                    <h3 className="font-bold text-slate-900">Notifications</h3>
+                    <span className="text-xs bg-slate-200 text-slate-600 px-2 py-0.5 rounded-full font-medium">{announcements.length} New</span>
+                  </div>
+                  <div className="max-h-[400px] overflow-y-auto">
+                    {announcements.length === 0 ? (
+                      <div className="p-6 text-center text-slate-500 text-sm">No new notifications</div>
+                    ) : (
+                      announcements.map((ann) => (
+                        <div key={ann.id} className="p-4 border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md ${
+                              ann.category === 'achievement' ? 'bg-amber-100 text-amber-700' :
+                              ann.category === 'new_content' ? 'bg-teal-100 text-teal-700' :
+                              'bg-blue-100 text-blue-700'
+                            }`}>
+                              {ann.category.replace('_', ' ')}
+                            </span>
+                            <span className="text-[10px] text-slate-400">
+                              {new Date(ann.created_at).toLocaleDateString()}
+                            </span>
+                          </div>
+                          <h4 className="text-sm font-semibold text-slate-900 mb-1">{ann.title}</h4>
+                          <p className="text-xs text-slate-600 line-clamp-2">{ann.content}</p>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
 
         {/* User Profile */}
         <button
@@ -300,13 +367,13 @@ export default function Navbar() {
           aria-label="Open profile"
         >
           <img
-            src={mockEmployee.avatarUrl}
+            src={employee?.avatarUrl || mockEmployee.avatarUrl}
             alt=""
             className="h-9 w-9 rounded-full object-cover ring-2 ring-teal-100"
           />
           <div className="hidden sm:block text-left">
-            <p className="text-sm font-semibold text-slate-900 leading-none">{displayName || mockEmployee.name}</p>
-            <p className="text-xs text-slate-600 mt-1 font-medium">{mockEmployee.role}</p>
+            <p className="text-sm font-semibold text-slate-900 leading-none">{displayName || employee?.name || mockEmployee.name}</p>
+            <p className="text-xs text-slate-600 mt-1 font-medium">{employee?.role || mockEmployee.role}</p>
           </div>
         </button>
       </div>

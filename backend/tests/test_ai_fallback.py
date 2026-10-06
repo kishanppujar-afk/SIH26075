@@ -2,7 +2,8 @@ import pytest
 from app.ai.fallback import (
     FallbackCompetencyAnalyzer,
     FallbackMCQGenerator,
-    FallbackFeedbackGenerator
+    FallbackFeedbackGenerator,
+    FallbackDishaChat
 )
 
 
@@ -50,3 +51,28 @@ async def test_fallback_feedback_generator():
     assert res["generated_by"] == "template_fallback"
     assert "Survey Design Diagnostic" in res["feedback_text"]
     assert "50%" in res["feedback_text"]
+
+
+@pytest.mark.asyncio
+async def test_fallback_disha_chat():
+    chat = FallbackDishaChat()
+    context = {
+        "name": "Aarav Sharma",
+        "target_role": "Senior Cloud Applications Engineer",
+        "top_gaps": [
+            {"skill_name": "Docker & Container Orchestration", "current_score": 55, "target_score": 80, "gap": 25, "status": "Growth Opportunity"}
+        ],
+        "recommendations": [
+            {"title": "Container Orchestration with Kubernetes", "provider": "NSSTA", "type": "Course", "impact_skill": "Docker & Container Orchestration"}
+        ],
+        "recent_assessments": []
+    }
+    res = await chat.generate_chat_response(
+        employee_context=context,
+        conversation_history=[],
+        user_message="What are my biggest skill gaps?"
+    )
+    assert res["generated_by"] == "template_fallback"
+    assert "Docker & Container Orchestration" in res["response"]
+    assert "Next step:" in res["response"]
+

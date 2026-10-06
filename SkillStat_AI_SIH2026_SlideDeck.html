@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkillStat AI — Smart India Hackathon 2026 Presentation (PS ID: 26101)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #0B0F17;
+      color: #0F172A;
+    }
+    .slide-page {
+      width: 1333px;
+      height: 750px;
+      aspect-ratio: 16 / 9;
+      page-break-after: always;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45);
+      position: relative;
+      overflow: hidden;
+      background: #FFFFFF;
+    }
+    @media print {
+      body {
+        background: transparent !important;
+        padding: 0 !important;
+      }
+      .slide-page {
+        margin: 0 !important;
+        box-shadow: none !important;
+        width: 100vw !important;
+        height: 100vh !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="py-10 px-4 flex flex-col items-center gap-10">
+
+  <!-- Floating Navigation / Print Bar -->
+  <header class="no-print fixed top-4 right-6 z-50 flex items-center gap-3 bg-slate-900/90 backdrop-blur border border-slate-700/80 px-4 py-2.5 rounded-full shadow-2xl">
+    <div class="flex items-center gap-2 pr-3 border-r border-slate-700">
+      <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span class="text-xs font-bold text-slate-200">SIH 2026 | PS ID: 26101</span>
+    </div>
+    <span class="text-xs text-slate-400">Strict 6-Slide Format</span>
+    <button onclick="window.print()" class="px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-full transition shadow-md flex items-center gap-1.5">
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4H7v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+      Export as PDF (Ctrl+P)
+    </button>
+  </header>
+
+  <!-- ========================================== -->
+  <!-- SLIDE 1: TITLE PAGE -->
+  <!-- ========================================== -->
+  <section class="slide-page p-12 flex flex-col justify-between rounded-xl border border-slate-200" id="slide-1">
+    <!-- Top Bar -->
+    <div class="flex items-start justify-between">
+      <div>
+        <span class="text-xs font-extrabold uppercase tracking-widest text-amber-600 bg-amber-50 border border-amber-200/80 px-3 py-1 rounded-md">Smart India Hackathon 2026</span>
+        <h1 class="text-5xl font-extrabold text-slate-900 mt-3 tracking-tight">SkillStat AI</h1>
+        <p class="text-base text-slate-600 font-semibold mt-1">Autonomous Competency Intelligence, Personalized Learning & Sovereign RAG Quiz Studio</p>
+      </div>
+      <div class="text-right">
+        <div class="bg-slate-900 text-white font-black text-sm px-4 py-2 rounded-lg tracking-wider shadow">
+          SIH 2026 OFFICIAL
+        </div>
+      </div>
+    </div>
+
+    <!-- Metadata Card Container -->
+    <div class="bg-slate-50/90 rounded-2xl border border-slate-200 p-8 shadow-sm">
+      <div class="grid grid-cols-12 gap-6">
+        <div class="col-span-8 space-y-4">
+          <div>
+            <span class="text-xs font-bold uppercase text-slate-400 tracking-wider">Problem Statement ID</span>
+            <p class="text-xl font-black text-amber-600 font-mono">26101</p>
+          </div>
+          <div>
+            <span class="text-xs font-bold uppercase text-slate-400 tracking-wider">Problem Statement Title</span>
+            <p class="text-sm font-medium text-slate-800 leading-snug mt-0.5">
+              Develop an AI enabled learning platform that identifies competency gaps, recommends personalized training through integration with the iGOT Karmayogi ecosystem, and capable of generating Quizzes and Multiple choice questions (MCQs) from uploaded learning materials to strengthen capacity building in India's Official Statistical System.
+            </p>
+          </div>
+          <div class="flex gap-8 pt-2">
+            <div>
+              <span class="text-xs font-bold uppercase text-slate-400 tracking-wider">Theme</span>
+              <p class="text-sm font-bold text-slate-800">Smart Education / e-Governance</p>
+            </div>
+            <div>
+              <span class="text-xs font-bold uppercase text-slate-400 tracking-wider">PS Category</span>
+              <p class="text-sm font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Software</p>
+            </div>
+            <div>
+              <span class="text-xs font-bold uppercase text-slate-400 tracking-wider">Target Ministry / Cadre</span>
+              <p class="text-sm font-bold text-slate-800">MoSPI (ISS & SSS Statistical Cadre)</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-span-4 bg-white rounded-xl border border-slate-200 p-5 flex flex-col justify-center space-y-4 shadow-sm">
+          <div class="border-b border-slate-100 pb-3">
+            <span class="text-xs font-bold uppercase text-slate-400 tracking-wider">Team ID</span>
+            <p class="text-base font-extrabold text-slate-900 mt-0.5">[Your Team ID]</p>
+          </div>
+          <div>
+            <span class="text-xs font-bold uppercase text-slate-400 tracking-wider">Team Name (Registered)</span>
+            <p class="text-base font-extrabold text-slate-900 mt-0.5">[Your Team Name]</p>
+          </div>
+          <div class="pt-2">
+            <span class="inline-block text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+              ● Working Prototype Ready (Ports 3000 & 5174)
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="flex items-center justify-between text-xs text-slate-400 border-t border-slate-100 pt-3">
+      <span>@SIH Idea submission - Template | Problem Statement ID: 26101</span>
+      <span>Slide 1 of 6</span>
+    </div>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- SLIDE 2: IDEA TITLE & PROPOSED SOLUTION -->
+  <!-- ========================================== -->
+  <section class="slide-page p-12 flex flex-col justify-between rounded-xl border border-slate-200" id="slide-2">
+    <div>
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">IDEA TITLE: SkillStat AI — Sovereign Competency Platform</h2>
+          <p class="text-xs font-bold text-amber-600 mt-0.5 tracking-wide">PROPOSED SOLUTION (DESCRIBE YOUR IDEA/SOLUTION/PROTOTYPE)</p>
+        </div>
+        <span class="text-xs font-bold bg-slate-100 text-slate-600 px-3 py-1 rounded-full border border-slate-200">[Team Name]</span>
+      </div>
+      <div class="w-full h-0.5 bg-slate-100 my-3"></div>
+
+      <!-- 3 Card Grid -->
+      <div class="grid grid-cols-3 gap-5 mt-4">
+        <!-- Card 1 -->
+        <div class="bg-slate-50/80 rounded-xl border border-slate-200 p-5 flex flex-col justify-between">
+          <div>
+            <div class="w-8 h-1 bg-amber-500 rounded-full mb-3"></div>
+            <h3 class="text-sm font-extrabold text-slate-900">1. Detailed Explanation</h3>
+            <p class="text-[11px] font-bold text-amber-600 uppercase tracking-wider mb-3">Architecture & Diagnostics</p>
+            <ul class="space-y-2.5 text-xs text-slate-600">
+              <li><strong class="text-slate-900">3-Tier Persona Portals:</strong> Specialized views for Statistical Officers (SSO/JSO), Supervisory Managers, and Cadre Admins.</li>
+              <li><strong class="text-slate-900">4-Domain Radar Engine:</strong> Maps skills across National Accounts, Survey Methodologies, Statistical Acts, and Data Analytics.</li>
+              <li><strong class="text-slate-900">Calibrated Diagnostics:</strong> Score-capping safeguard restricts 1-question tests to max 80%, requiring 2+ questions for 100% mastery.</li>
+              <li><strong class="text-slate-900">Disha AI Mentor:</strong> Conversational assistant contextually tailored to individual officer competency deficits.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-slate-50/80 rounded-xl border border-slate-200 p-5 flex flex-col justify-between">
+          <div>
+            <div class="w-8 h-1 bg-emerald-500 rounded-full mb-3"></div>
+            <h3 class="text-sm font-extrabold text-slate-900">2. How It Addresses Problem</h3>
+            <p class="text-[11px] font-bold text-emerald-600 uppercase tracking-wider mb-3">Bridging PS 26101 Mandate</p>
+            <ul class="space-y-2.5 text-xs text-slate-600">
+              <li><strong class="text-slate-900">Empirical Deficit Scoring:</strong> Continuous quantitative gap tracking replaces subjective, infrequent annual appraisals.</li>
+              <li><strong class="text-slate-900">iGOT Karmayogi Deep Sync:</strong> Auto-recommends accredited courses across 53 NSSTA modules with 1-click enrollment.</li>
+              <li><strong class="text-slate-900">Local RAG Quiz Studio:</strong> Transforms raw official manuals/circulars into validated multiple-choice quizzes in seconds.</li>
+              <li><strong class="text-slate-900">Cadre-Wide Telemetry:</strong> Equips leadership with division-level readiness heatmaps (NAD, FOD, ESD, CPD).</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-slate-50/80 rounded-xl border border-slate-200 p-5 flex flex-col justify-between">
+          <div>
+            <div class="w-8 h-1 bg-slate-900 rounded-full mb-3"></div>
+            <h3 class="text-sm font-extrabold text-slate-900">3. Innovation & Uniqueness</h3>
+            <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-3">Sovereignty & Grounding</p>
+            <ul class="space-y-2.5 text-xs text-slate-600">
+              <li><strong class="text-slate-900">100% Data Sovereignty:</strong> Local LLM runtime (Ollama gemma3:4b + nomic-embed-text) ensures zero cloud leaks.</li>
+              <li><strong class="text-slate-900">Verifiable Grounding:</strong> Every generated MCQ cites verbatim source snippets to eliminate hallucinations.</li>
+              <li><strong class="text-slate-900">Pedagogical Angle Cycling:</strong> Deterministically cycles 5 cognitive angles to prevent duplicate questions.</li>
+              <li><strong class="text-slate-900">Quarantined Sandbox:</strong> Practice quiz attempts (is_practice=True) strictly protect official readiness scores.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="flex items-center justify-between text-xs text-slate-400 border-t border-slate-100 pt-3">
+      <span>@SIH Idea submission - Template | Problem Statement ID: 26101</span>
+      <span>Slide 2 of 6</span>
+    </div>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- SLIDE 3: TECHNICAL APPROACH -->
+  <!-- ========================================== -->
+  <section class="slide-page p-12 flex flex-col justify-between rounded-xl border border-slate-200" id="slide-3">
+    <div>
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">TECHNICAL APPROACH</h2>
+          <p class="text-xs font-bold text-amber-600 mt-0.5 tracking-wide">ARCHITECTURE, TECH STACK & END-TO-END IMPLEMENTATION PIPELINE</p>
+        </div>
+        <span class="text-xs font-bold bg-slate-100 text-slate-600 px-3 py-1 rounded-full border border-slate-200">[Team Name]</span>
+      </div>
+      <div class="w-full h-0.5 bg-slate-100 my-3"></div>
+
+      <!-- 2 Column Layout -->
+      <div class="grid grid-cols-12 gap-5 mt-4">
+        <!-- Tech Stack Column (5 cols) -->
+        <div class="col-span-5 bg-slate-50/80 rounded-xl border border-slate-200 p-5">
+          <div class="w-8 h-1 bg-amber-500 rounded-full mb-3"></div>
+          <h3 class="text-sm font-extrabold text-slate-900">Technologies To Be Used</h3>
+          <p class="text-[11px] font-bold text-amber-600 uppercase tracking-wider mb-3">Specifications</p>
+          <ul class="space-y-2 text-xs text-slate-600">
+            <li><strong class="text-slate-900">Modern Frontend:</strong> React 18/19, Vite, Tailwind CSS, Lucide Icons, Recharts (Radar, Heatmaps).</li>
+            <li><strong class="text-slate-900">Asynchronous Backend:</strong> FastAPI (Python 3.12), SQLAlchemy 2.0 ORM, Pydantic v2 data models.</li>
+            <li><strong class="text-slate-900">Sovereign AI Engine:</strong> Ollama local daemon hosting gemma3:4b (LLM reasoning) & nomic-embed-text (embeddings).</li>
+            <li><strong class="text-slate-900">Vector Retrieval:</strong> Sliding-window semantic chunker (500 chars, 100 overlap) with Cosine Similarity search.</li>
+            <li><strong class="text-slate-900">Enterprise Security:</strong> JWT bearer authentication, Passlib/Bcrypt password hashing, Role-Based Access Control.</li>
+            <li><strong class="text-slate-900">Test Coverage:</strong> 41/41 unit & integration tests passing in pytest (scoring isolation, RAG, calibration).</li>
+          </ul>
+        </div>
+
+        <!-- Methodology Column (7 cols) -->
+        <div class="col-span-7 bg-slate-50/80 rounded-xl border border-slate-200 p-5">
+          <div class="w-8 h-1 bg-emerald-500 rounded-full mb-3"></div>
+          <h3 class="text-sm font-extrabold text-slate-900">Methodology & Implementation Process</h3>
+          <p class="text-[11px] font-bold text-emerald-600 uppercase tracking-wider mb-3">6-Stage End-to-End Workflow</p>
+          <div class="space-y-2 text-xs text-slate-600">
+            <div class="flex items-start gap-2 bg-white p-2 rounded border border-slate-100">
+              <span class="font-bold text-amber-600 font-mono text-[11px]">01</span>
+              <div><strong class="text-slate-900">Ingestion:</strong> Upload official MoSPI circulars, manuals, or survey SOPs (PDF/DOCX/TXT).</div>
+            </div>
+            <div class="flex items-start gap-2 bg-white p-2 rounded border border-slate-100">
+              <span class="font-bold text-amber-600 font-mono text-[11px]">02</span>
+              <div><strong class="text-slate-900">Chunking & Embeddings:</strong> Extracts semantic chunks; generates 768-dim embeddings via local Ollama.</div>
+            </div>
+            <div class="flex items-start gap-2 bg-white p-2 rounded border border-slate-100">
+              <span class="font-bold text-amber-600 font-mono text-[11px]">03</span>
+              <div><strong class="text-slate-900">Grounded MCQ Generation:</strong> Cyclically applies 5 cognitive angles with verbatim source citations.</div>
+            </div>
+            <div class="flex items-start gap-2 bg-white p-2 rounded border border-slate-100">
+              <span class="font-bold text-amber-600 font-mono text-[11px]">04</span>
+              <div><strong class="text-slate-900">Admin Studio Review:</strong> Faculty curates questions, edits distractors, and publishes practice sets.</div>
+            </div>
+            <div class="flex items-start gap-2 bg-white p-2 rounded border border-slate-100">
+              <span class="font-bold text-amber-600 font-mono text-[11px]">05</span>
+              <div><strong class="text-slate-900">Quarantined Practice:</strong> Officers practice without penalty (is_practice=True) to build fluency.</div>
+            </div>
+            <div class="flex items-start gap-2 bg-white p-2 rounded border border-slate-100">
+              <span class="font-bold text-amber-600 font-mono text-[11px]">06</span>
+              <div><strong class="text-slate-900">Cadre Telemetry & iGOT:</strong> Maps deficits to 53 NSSTA courses with automated promotion tracking.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="flex items-center justify-between text-xs text-slate-400 border-t border-slate-100 pt-3">
+      <span>@SIH Idea submission - Template | Problem Statement ID: 26101</span>
+      <span>Slide 3 of 6</span>
+    </div>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- SLIDE 4: FEASIBILITY AND VIABILITY -->
+  <!-- ========================================== -->
+  <section class="slide-page p-12 flex flex-col justify-between rounded-xl border border-slate-200" id="slide-4">
+    <div>
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">FEASIBILITY AND VIABILITY</h2>
+          <p class="text-xs font-bold text-amber-600 mt-0.5 tracking-wide">OPERATIONAL FEASIBILITY, ZERO-LICENSE ECONOMICS & RISK MITIGATION</p>
+        </div>
+        <span class="text-xs font-bold bg-slate-100 text-slate-600 px-3 py-1 rounded-full border border-slate-200">[Team Name]</span>
+      </div>
+      <div class="w-full h-0.5 bg-slate-100 my-3"></div>
+
+      <!-- 2 Column Layout -->
+      <div class="grid grid-cols-12 gap-5 mt-4">
+        <!-- Feasibility (4.5 cols) -->
+        <div class="col-span-5 bg-slate-50/80 rounded-xl border border-slate-200 p-5">
+          <div class="w-8 h-1 bg-emerald-500 rounded-full mb-3"></div>
+          <h3 class="text-sm font-extrabold text-slate-900">Analysis of Feasibility</h3>
+          <p class="text-[11px] font-bold text-emerald-600 uppercase tracking-wider mb-3">Operational & Economic Viability</p>
+          <ul class="space-y-3 text-xs text-slate-600">
+            <li><strong class="text-slate-900">Fully Functional MVP:</strong> Production-grade system with 47 REST APIs, 12 seeded Indian Statistical Service profiles, and 53 NSSTA courses.</li>
+            <li><strong class="text-slate-900">Zero-License Cost:</strong> 100% open-source stack (FastAPI, React, Ollama, SQLite). Zero third-party API dependencies or recurring cloud fees.</li>
+            <li><strong class="text-slate-900">Workstation Footprint:</strong> Efficiently executes on standard NIC/MoSPI office laptops (8GB–16GB RAM) without requiring cloud servers.</li>
+            <li><strong class="text-slate-900">Frictionless Onboarding:</strong> Web-based single-page application requires zero client-side installation for field officers.</li>
+          </ul>
+        </div>
+
+        <!-- Risk Matrix (7.5 cols) -->
+        <div class="col-span-7 bg-slate-50/80 rounded-xl border border-slate-200 p-5">
+          <div class="w-8 h-1 bg-amber-500 rounded-full mb-3"></div>
+          <h3 class="text-sm font-extrabold text-slate-900">Potential Challenges, Risks & Mitigations</h3>
+          <p class="text-[11px] font-bold text-amber-600 uppercase tracking-wider mb-3">Defensive Engineering Strategies</p>
+          <div class="space-y-2.5 text-xs">
+            <div class="p-2.5 rounded-lg bg-white border border-slate-100">
+              <div class="flex items-center justify-between font-bold text-slate-900 mb-1">
+                <span>1. Risk: LLM Hallucinations in Assessment MCQs</span>
+                <span class="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Mitigated</span>
+              </div>
+              <p class="text-slate-600 text-[11px]"><strong>Strategy:</strong> Single-chunk strict context bounding; forces source snippet citation displayed alongside every question.</p>
+            </div>
+            <div class="p-2.5 rounded-lg bg-white border border-slate-100">
+              <div class="flex items-center justify-between font-bold text-slate-900 mb-1">
+                <span>2. Risk: Distortion of Official Readiness Scores</span>
+                <span class="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Mitigated</span>
+              </div>
+              <p class="text-slate-600 text-[11px]"><strong>Strategy:</strong> 1-question evaluations capped at max 80%; requires 2+ questions for 100%; practice attempts quarantined via is_practice=True.</p>
+            </div>
+            <div class="p-2.5 rounded-lg bg-white border border-slate-100">
+              <div class="flex items-center justify-between font-bold text-slate-900 mb-1">
+                <span>3. Risk: Sensitive Government Data Leaks</span>
+                <span class="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Mitigated</span>
+              </div>
+              <p class="text-slate-600 text-[11px]"><strong>Strategy:</strong> 100% on-premises execution via local Ollama runtime; zero external API egress or third-party telemetry.</p>
+            </div>
+            <div class="p-2.5 rounded-lg bg-white border border-slate-100">
+              <div class="flex items-center justify-between font-bold text-slate-900 mb-1">
+                <span>4. Risk: Low Field Officer Adoption</span>
+                <span class="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Mitigated</span>
+              </div>
+              <p class="text-slate-600 text-[11px]"><strong>Strategy:</strong> Low-stakes diagnostics; empathetic "Disha" AI mentor; seamless 1-click redirection to iGOT Karmayogi modules.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="flex items-center justify-between text-xs text-slate-400 border-t border-slate-100 pt-3">
+      <span>@SIH Idea submission - Template | Problem Statement ID: 26101</span>
+      <span>Slide 4 of 6</span>
+    </div>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- SLIDE 5: IMPACT AND BENEFITS -->
+  <!-- ========================================== -->
+  <section class="slide-page p-12 flex flex-col justify-between rounded-xl border border-slate-200" id="slide-5">
+    <div>
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">IMPACT AND BENEFITS</h2>
+          <p class="text-xs font-bold text-amber-600 mt-0.5 tracking-wide">TRANSFORMING STATISTICAL CAPACITY ACROSS INDIA'S OFFICIAL STATISTICAL SYSTEM</p>
+        </div>
+        <span class="text-xs font-bold bg-slate-100 text-slate-600 px-3 py-1 rounded-full border border-slate-200">[Team Name]</span>
+      </div>
+      <div class="w-full h-0.5 bg-slate-100 my-3"></div>
+
+      <!-- 4 Quadrants Grid -->
+      <div class="grid grid-cols-2 gap-5 mt-4">
+        <!-- Q1 -->
+        <div class="bg-slate-50/80 rounded-xl border border-slate-200 p-4">
+          <div class="w-6 h-1 bg-amber-500 rounded-full mb-2"></div>
+          <h3 class="text-sm font-extrabold text-slate-900">Target Audience: Statistical Cadre (SSO/JSO)</h3>
+          <p class="text-[10px] font-bold text-amber-600 uppercase tracking-wider mb-2">Individual Empowerment</p>
+          <ul class="space-y-1.5 text-xs text-slate-600">
+            <li><strong class="text-slate-900">Transparent Clarity:</strong> Real-time visibility into skill gaps across 4 domains, replacing opaque annual ACRs.</li>
+            <li><strong class="text-slate-900">Targeted Courses:</strong> 1-click routing to 53 NSSTA courses tailored to individual competency deficits.</li>
+            <li><strong class="text-slate-900">Psychological Safety:</strong> Zero-penalty sandbox practice quizzes eliminate test anxiety.</li>
+          </ul>
+        </div>
+
+        <!-- Q2 -->
+        <div class="bg-slate-50/80 rounded-xl border border-slate-200 p-4">
+          <div class="w-6 h-1 bg-emerald-500 rounded-full mb-2"></div>
+          <h3 class="text-sm font-extrabold text-slate-900">Target Audience: Cadre Leadership & NSSTA</h3>
+          <p class="text-[10px] font-bold text-emerald-600 uppercase tracking-wider mb-2">Workforce Intelligence</p>
+          <ul class="space-y-1.5 text-xs text-slate-600">
+            <li><strong class="text-slate-900">Cadre-Wide Telemetry:</strong> Macro readiness visibility across divisions (NAD, FOD, ESD, CPD).</li>
+            <li><strong class="text-slate-900">Evidence Deployment:</strong> Assign officers to complex operations (Census, PLFS) based on verified skills.</li>
+            <li><strong class="text-slate-900">Institutional Interventions:</strong> Highlights systemic gaps to guide NSSTA curriculum updates.</li>
+          </ul>
+        </div>
+
+        <!-- Q3 -->
+        <div class="bg-slate-50/80 rounded-xl border border-slate-200 p-4">
+          <div class="w-6 h-1 bg-slate-900 rounded-full mb-2"></div>
+          <h3 class="text-sm font-extrabold text-slate-900">Economic & Operational Benefits</h3>
+          <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">Resource Efficiency</p>
+          <ul class="space-y-1.5 text-xs text-slate-600">
+            <li><strong class="text-slate-900">80% Faster Quiz Creation:</strong> Automated RAG quiz generation reduces exam prep time from hours to under 30s.</li>
+            <li><strong class="text-slate-900">Optimized Karmayogi ROI:</strong> Directs civil servants solely into gap-closing, relevant modules.</li>
+            <li><strong class="text-slate-900">Zero Recurring Cloud Costs:</strong> 100% open-source on existing government infrastructure.</li>
+          </ul>
+        </div>
+
+        <!-- Q4 -->
+        <div class="bg-slate-50/80 rounded-xl border border-slate-200 p-4">
+          <div class="w-6 h-1 bg-amber-600 rounded-full mb-2"></div>
+          <h3 class="text-sm font-extrabold text-slate-900">Institutional & Governance Benefits</h3>
+          <p class="text-[10px] font-bold text-amber-700 uppercase tracking-wider mb-2">National Data Excellence</p>
+          <ul class="space-y-1.5 text-xs text-slate-600">
+            <li><strong class="text-slate-900">Higher National Data Integrity:</strong> Skilled officers improve the reliability of GDP, CPI, IIP, and PLFS.</li>
+            <li><strong class="text-slate-900">Mission Karmayogi Alignment:</strong> Operationalizes DoPT's FRAC competency governance mandate.</li>
+            <li><strong class="text-slate-900">Digital Sovereignty:</strong> Exemplary privacy-preserving on-premises AI deployment for Indian civil services.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="flex items-center justify-between text-xs text-slate-400 border-t border-slate-100 pt-3">
+      <span>@SIH Idea submission - Template | Problem Statement ID: 26101</span>
+      <span>Slide 5 of 6</span>
+    </div>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- SLIDE 6: RESEARCH AND REFERENCES -->
+  <!-- ========================================== -->
+  <section class="slide-page p-12 flex flex-col justify-between rounded-xl border border-slate-200" id="slide-6">
+    <div>
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">RESEARCH  AND REFERENCES</h2>
+          <p class="text-xs font-bold text-amber-600 mt-0.5 tracking-wide">STATUTORY FRAMEWORKS, MISSION KARMAYOGI, AI RESEARCH & METRICS</p>
+        </div>
+        <span class="text-xs font-bold bg-slate-100 text-slate-600 px-3 py-1 rounded-full border border-slate-200">[Team Name]</span>
+      </div>
+      <div class="w-full h-0.5 bg-slate-100 my-3"></div>
+
+      <!-- 3 Card Grid -->
+      <div class="grid grid-cols-3 gap-5 mt-4">
+        <!-- Card 1 -->
+        <div class="bg-slate-50/80 rounded-xl border border-slate-200 p-5 flex flex-col justify-between">
+          <div>
+            <div class="w-8 h-1 bg-amber-500 rounded-full mb-3"></div>
+            <h3 class="text-sm font-extrabold text-slate-900">Government Frameworks</h3>
+            <p class="text-[11px] font-bold text-amber-600 uppercase tracking-wider mb-3">Official Standards</p>
+            <ul class="space-y-2.5 text-xs text-slate-600">
+              <li><strong class="text-slate-900">Mission Karmayogi (DoPT):</strong> National Programme for Civil Services Capacity Building & FRAC Framework. [karmayogi.gov.in]</li>
+              <li><strong class="text-slate-900">MoSPI Cadre Regulations:</strong> Indian Statistical Service (ISS) & Subordinate Statistical Service (SSS) promotion rules.</li>
+              <li><strong class="text-slate-900">NSSTA Greater Noida:</strong> Training Program Catalog (53 domain-specific TPAC statistical modules).</li>
+              <li><strong class="text-slate-900">Collection of Statistics Act, 2007:</strong> Statutory frameworks for national surveys and data confidentiality.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-slate-50/80 rounded-xl border border-slate-200 p-5 flex flex-col justify-between">
+          <div>
+            <div class="w-8 h-1 bg-emerald-500 rounded-full mb-3"></div>
+            <h3 class="text-sm font-extrabold text-slate-900">Academic Literature</h3>
+            <p class="text-[11px] font-bold text-emerald-600 uppercase tracking-wider mb-3">RAG & Embedding Foundations</p>
+            <ul class="space-y-2.5 text-xs text-slate-600">
+              <li><strong class="text-slate-900">Lewis et al. (NeurIPS 2020):</strong> "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks".</li>
+              <li><strong class="text-slate-900">Google DeepMind (2024):</strong> "Gemma 3: Open Models for Responsible On-Device and Sovereign AI".</li>
+              <li><strong class="text-slate-900">Nomic AI (2024):</strong> "Nomic Embed: High-Dimensional Contrastive Document Embeddings".</li>
+              <li><strong class="text-slate-900">Bloom's Revised Taxonomy:</strong> Applied for deterministic pedagogical angle cycling in MCQ generation.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-slate-50/80 rounded-xl border border-slate-200 p-5 flex flex-col justify-between">
+          <div>
+            <div class="w-8 h-1 bg-slate-900 rounded-full mb-3"></div>
+            <h3 class="text-sm font-extrabold text-slate-900">Prototype Validation</h3>
+            <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-3">Empirical Metrics</p>
+            <ul class="space-y-2.5 text-xs text-slate-600">
+              <li><strong class="text-slate-900">Dual-Portal Deployment:</strong> Live Admin Studio (Port 5174), Officer App (Port 3000), FastAPI Core (Port 8000).</li>
+              <li><strong class="text-slate-900">41/41 Automated Tests:</strong> Pytest suites passing across RAG generation, calibration, and practice isolation.</li>
+              <li><strong class="text-slate-900">Deterministic Isolation:</strong> Practice quiz submissions verified to never pollute official readiness scores.</li>
+              <li><strong class="text-slate-900">53 Verified Course Mappings:</strong> Cross-referenced national deficits to accredited Karmayogi courses.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="flex items-center justify-between text-xs text-slate-400 border-t border-slate-100 pt-3">
+      <span>@SIH Idea submission - Template | Problem Statement ID: 26101</span>
+      <span>Slide 6 of 6</span>
+    </div>
+  </section>
+
+</body>
+</html>

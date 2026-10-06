@@ -61,6 +61,20 @@ class MCQGenerator(ABC):
         """
         pass
 
+    @abstractmethod
+    async def generate_single_mcq_from_chunk(
+        self,
+        chunk_text: str,
+        topic: Optional[str] = None,
+        focus_angle: Optional[str] = None,
+        avoid_questions: Optional[List[str]] = None
+    ) -> Dict[str, Any]:
+        """
+        Generate a single multiple-choice diagnostic question strictly grounded in one chunk snippet.
+        Optionally varies focus angle and avoids duplicating previously generated questions.
+        """
+        pass
+
 
 class SemanticMatcher(ABC):
     @abstractmethod
